@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Mandats\M100\dev\vtkQt\prepro\build\Prepro_autogen\mocs_compilation_Debug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Mandats\M100\dev\vtkQt\prepro\src\HighlightInteractorStyle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Mandats\M100\dev\vtkQt\prepro\src\MainWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Mandats\M100\dev\vtkQt\prepro\src\Model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Mandats\M100\dev\vtkQt\prepro\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Mandats\M100\dev\vtkQt\prepro\build\Prepro_autogen\mocs_compilation_Release.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Mandats\M100\dev\vtkQt\prepro\build\Prepro_autogen\mocs_compilation_MinSizeRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Mandats\M100\dev\vtkQt\prepro\build\Prepro_autogen\mocs_compilation_RelWithDebInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Mandats\M100\dev\vtkQt\prepro\include\HighlightInteractorStyle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Mandats\M100\dev\vtkQt\prepro\include\MainWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Mandats\M100\dev\vtkQt\prepro\include\Model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Mandats\M100\dev\vtkQt\prepro\build\Prepro_autogen\include_Debug\forms\ui_MainWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Mandats\M100\dev\vtkQt\prepro\build\Prepro_autogen\include_Release\forms\ui_MainWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Mandats\M100\dev\vtkQt\prepro\build\Prepro_autogen\include_MinSizeRel\forms\ui_MainWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Mandats\M100\dev\vtkQt\prepro\build\Prepro_autogen\include_RelWithDebInfo\forms\ui_MainWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Mandats\M100\dev\vtkQt\prepro\build\CMakeFiles\0ff5bf42931c3eb8a48becf2ba4ad214\autouic_(CONFIG).stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Mandats\M100\dev\vtkQt\prepro\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Mandats\M100\dev\vtkQt\prepro\forms\MainWindow.ui" />
+    <None Include="C:\Mandats\M100\dev\vtkQt\prepro\build\Prepro_autogen\autouic_Debug.stamp" />
+    <None Include="C:\Mandats\M100\dev\vtkQt\prepro\build\Prepro_autogen\autouic_Release.stamp" />
+    <None Include="C:\Mandats\M100\dev\vtkQt\prepro\build\Prepro_autogen\autouic_MinSizeRel.stamp" />
+    <None Include="C:\Mandats\M100\dev\vtkQt\prepro\build\Prepro_autogen\autouic_RelWithDebInfo.stamp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{45AF8EDF-0C21-3443-9F04-4B97D9E9A0B7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{516DF4E4-9CB5-3267-B514-1A3AB90DB02C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{2AE6A074-03AD-3D3D-B6EF-5FE8C2594A59}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

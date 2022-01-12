@@ -1,0 +1,22 @@
+^C:\MANDATS\M100\DEV\VTKQT\PREPRO\BUILD\CMAKEFILES\0FF5BF42931C3EB8A48BECF2BA4AD214\AUTOUIC_(CONFIG).STAMP.RULE
+setlocal
+cd C:\Mandats\M100\dev\vtkQt\prepro\build
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\MANDATS\M100\DEV\VTKQT\PREPRO\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Mandats/M100/dev/vtkQt/prepro -BC:/Mandats/M100/dev/vtkQt/prepro/build --check-stamp-file C:/Mandats/M100/dev/vtkQt/prepro/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
