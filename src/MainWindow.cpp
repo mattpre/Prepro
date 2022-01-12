@@ -150,6 +150,8 @@ void MainWindow::onSelectionMethodClick()
     if (ui->selMethodBox_rb->isChecked()) {
         mInteractorStyle->setModeToSelect();
         ui->selSlide_gb->setEnabled(FALSE);
+        mSelFunActor->SetVisibility(0);
+        this->updateView();
     }
     else {
         mInteractorStyle->setModeToOrient();
