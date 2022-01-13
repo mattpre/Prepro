@@ -77,7 +77,8 @@ void HighlightInteractorStyle::OnLeftButtonUp()
 
         int entity = mainWindow->ui_giveSelectionEntity();
         int mode = mainWindow->ui_giveSelectionMode();
-        if (mainWindow->giveActor(entity)->GetVisibility() || (mode == 2 || mode == 3)) {
+        if (mainWindow->giveActor(0)->GetVisibility() || (mode == 2 || mode == 3)) {
+            //        if (mainWindow->giveActor(entity)->GetVisibility() || (mode == 2 || mode == 3)) {
             vtkSmartPointer<vtkUnstructuredGrid> theModel;
             //if (mode == 2 || mode == 3)
             //    theModel = this->mainWindow->giveModel()->GetSelection(entity);
@@ -90,21 +91,38 @@ void HighlightInteractorStyle::OnLeftButtonUp()
             sel->Update();
             vtkUnstructuredGrid* UG = (static_cast<vtkUnstructuredGrid*>(sel->GetOutput()));
 
-            if (UG->GetNumberOfCells() || mode == 3) {
-                vtkIdTypeArray* Ids = static_cast<vtkIdTypeArray*>(UG->GetCellData()->GetArray("Element numbers"));
-
-                //char msg[100];
-                //sprintf_s(msg, "%d %d", Ids->GetTuple1(Ids->GetNumberOfTuples()-100), theModel->GetNumberOfCells());
-                //MessageBoxA(NULL, msg, "Error", MB_ICONEXCLAMATION | MB_OK);
-
-                vtkSelectionNode* selectionNode = vtkSelectionNode::New();
-                selectionNode->Initialize();
-                selectionNode->SetFieldType(vtkSelectionNode::CELL);
-                selectionNode->SetContentType(vtkSelectionNode::GLOBALIDS);
-                selectionNode->SetSelectionList(Ids);
-
-                this->mainWindow->giveModel()->UpdateSelection(entity,selectionNode,mode);
+            //if (UG->GetNumberOfCells() || mode == 3) {
+            std::string globalIdArrayName;
+            if (entity == 0)
+                globalIdArrayName = "Element numbers";
+            else if (entity == 1)
+                globalIdArrayName = "Face numbers";
+            else if (entity == 2)
+                globalIdArrayName = "Edge numbers";
+            vtkIdTypeArray* Ids = static_cast<vtkIdTypeArray*>(UG->GetCellData()->GetArray(globalIdArrayName.c_str()));
+            if (!Ids) {
+                Ids = vtkIdTypeArray::New();
+                Ids->SetName(globalIdArrayName.c_str());
             }
+
+            //char msg[100];
+            //sprintf_s(msg, "%d %d", Ids->GetTuple1(Ids->GetNumberOfTuples()-100), theModel->GetNumberOfCells());
+            //MessageBoxA(NULL, msg, "Error", MB_ICONEXCLAMATION | MB_OK);
+            /*
+            std::ofstream myfile;
+            myfile.open("selection.txt");
+            for (int k = 0;k < Ids->GetNumberOfTuples();k++)
+                myfile << Ids->GetTuple1(k)<<endl;
+            myfile.close();*/
+
+            vtkSelectionNode* selectionNode = vtkSelectionNode::New();
+            selectionNode->Initialize();
+            selectionNode->SetFieldType(vtkSelectionNode::CELL);
+            selectionNode->SetContentType(vtkSelectionNode::GLOBALIDS);
+            selectionNode->SetSelectionList(Ids);
+
+            this->mainWindow->giveModel()->UpdateSelection(entity, selectionNode, mode);
+            //}
         }
     }
 

@@ -42,9 +42,7 @@ public:
     void SetSelectionToVisible();
     void SetSelectionToNone();
     void SetSelectionToInverse();
-    //void UpdateDerivedModel(int);
-    void shrinkFaceModel(double);
-    void renumberEntities(vtkSmartPointer<vtkUnstructuredGrid>);
+    void GetDerivedModel(int);
 
 };
 

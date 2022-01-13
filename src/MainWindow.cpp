@@ -251,8 +251,10 @@ void MainWindow::updateSelectionFunction()
 {
     this->updateSelFunRepresentation();
 
+    int entity = this->ui_giveSelectionEntity();
+
     vtkNew<vtkExtractGeometry> sel;
-    sel->SetInputData(this->giveModel()->GetVisibleModel(0));
+    sel->SetInputData(this->giveModel()->GetVisibleModel(entity));
     vtkSmartPointer<vtkBox> boxFunction = vtkSmartPointer<vtkBox>::New();
     double xm = ui->slideSelXm_spin->value();
     double xp = ui->slideSelXp_spin->value();
@@ -276,7 +278,13 @@ void MainWindow::updateSelectionFunction()
     int mode = 1;//this->ui_giveSelectionMode();
 
     if (UG->GetNumberOfCells()) {
-        vtkIdTypeArray* Ids = static_cast<vtkIdTypeArray*>(UG->GetCellData()->GetArray("Element numbers"));
+        vtkIdTypeArray* Ids;
+        if (entity == 0)
+            Ids = static_cast<vtkIdTypeArray*>(UG->GetCellData()->GetArray("Element numbers"));
+        else if (entity == 1)
+            Ids = static_cast<vtkIdTypeArray*>(UG->GetCellData()->GetArray("Face numbers"));
+        else if (entity == 2)
+            Ids = static_cast<vtkIdTypeArray*>(UG->GetCellData()->GetArray("Edge numbers"));
 
         vtkSelectionNode* selectionNode = vtkSelectionNode::New();
         selectionNode->Initialize();
@@ -284,7 +292,7 @@ void MainWindow::updateSelectionFunction()
         selectionNode->SetContentType(vtkSelectionNode::GLOBALIDS);
         selectionNode->SetSelectionList(Ids);
 
-        this->giveModel()->UpdateSelection(0, selectionNode, mode);
+        this->giveModel()->UpdateSelection(entity, selectionNode, mode);
 
     }
 
@@ -327,7 +335,7 @@ void MainWindow::onLoadMeshClick() {
 
     mSelActor[0]->SetMapper(selVolMapper);
     mSelActor[0]->SetVisibility(1);
-    mSelActor[0]->GetProperty()->SetColor(this->getColors("Volume selected"));
+    mSelActor[0]->GetProperty()->SetColor(this->getColors("Volumes selected"));
 
     vtkSmartPointer<vtkDataSetMapper> selFacMapper = vtkSmartPointer<vtkDataSetMapper>::New();
     selFacMapper->SetInputData(model->GetSelection(1));
@@ -547,33 +555,48 @@ void MainWindow::updateSlideValueZp(double val)
 void MainWindow::onShowSelectionClick()
 {
     model->SetModelToSelection();
+    for (int k = 1;k < 3;k++)
+        model->GetDerivedModel(k);
 
-    vtkSmartPointer<vtkDataSetMapper> mapper = vtkSmartPointer<vtkDataSetMapper>::New();
-    mapper->SetInputData(model->GetVisibleModel(0));
+    vtkSmartPointer<vtkDataSetMapper> mapper;
+    for (int k = 0;k < 3;k++) {
+        mapper = vtkSmartPointer<vtkDataSetMapper>::New();
+        mapper->SetInputData(model->GetVisibleModel(k));
 
-    this->mActor[0]->SetMapper(mapper);
+        this->mActor[k]->SetMapper(mapper);
+    }
     this->updateView();
 }
 
 void MainWindow::onHideSelectionClick()
 {
     model->SetModelToInverseSelection();
+    for (int k = 1;k < 3;k++)
+        model->GetDerivedModel(k);
 
-    vtkSmartPointer<vtkDataSetMapper> mapper = vtkSmartPointer<vtkDataSetMapper>::New();
-    mapper->SetInputData(model->GetVisibleModel(0));
+    vtkSmartPointer<vtkDataSetMapper> mapper;
+    for (int k = 0;k < 3;k++) {
+        mapper = vtkSmartPointer<vtkDataSetMapper>::New();
+        mapper->SetInputData(model->GetVisibleModel(k));
 
-    this->mActor[0]->SetMapper(mapper);
+        this->mActor[k]->SetMapper(mapper);
+    }
     this->updateView();
 }
 
 void MainWindow::onShowAllClick()
 {
     model->SetModelToFull();
+    for (int k = 1;k < 3;k++)
+        model->GetDerivedModel(k);
 
-    vtkSmartPointer<vtkDataSetMapper> mapper = vtkSmartPointer<vtkDataSetMapper>::New();
-    mapper->SetInputData(model->GetVisibleModel(0));
+    vtkSmartPointer<vtkDataSetMapper> mapper;
+    for (int k = 0;k < 3;k++) {
+        mapper = vtkSmartPointer<vtkDataSetMapper>::New();
+        mapper->SetInputData(model->GetVisibleModel(k));
 
-    this->mActor[0]->SetMapper(mapper);
+        this->mActor[k]->SetMapper(mapper);
+    }
     this->updateView();
 }
 
@@ -671,7 +694,6 @@ void MainWindow::updateView()
         mActor[1]->GetProperty()->SetEdgeVisibility(1);
     }
     else if (fac_ind == 2) {
-        model->shrinkFaceModel(0.8);
         mActor[1]->GetProperty()->SetRepresentationToSurface();
         mActor[1]->GetProperty()->SetEdgeVisibility(0);
         vtkSmartPointer<vtkDataSet> mm = mActor[1]->GetMapper()->GetInput();
@@ -768,22 +790,27 @@ vtkSmartPointer<vtkActor> MainWindow::giveSelectionActor(int obj_type)
 
 double* MainWindow::getColors(vtkStdString aStr)
 {
+    double* a;
     vtkNew<vtkNamedColors> colors;
     if (!strcmp(aStr, "Volumes"))
-        return colors->GetColor3d("Pink").GetData();
+        a = colors->GetColor3d("Pink").GetData();
     else if (!strcmp(aStr, "Volumes selected"))
-        return colors->GetColor3d("DeepPink").GetData();
+        a = colors->GetColor3d("DeepPink").GetData();
     else if (!strcmp(aStr, "Edges"))
-        return colors->GetColor3d("Gold").GetData();
+        a = colors->GetColor3d("Gold").GetData();
     else if (!strcmp(aStr, "Edges selected"))
-        return colors->GetColor3d("GreenYellow").GetData();
+        a = colors->GetColor3d("GreenYellow").GetData();
     else if (!strcmp(aStr, "Faces"))
-        return colors->GetColor3d("DodgerBlue").GetData();
+        a = colors->GetColor3d("DodgerBlue").GetData();
     else if (!strcmp(aStr, "Faces selected"))
-        return colors->GetColor3d("Cyan").GetData();
+        a = colors->GetColor3d("Cyan").GetData();
     else if (!strcmp(aStr, "Nodes"))
-        return colors->GetColor3d("Red").GetData();
+        a = colors->GetColor3d("Red").GetData();
     else if (!strcmp(aStr, "Nodes selected"))
-        return colors->GetColor3d("IndianRed").GetData();
+        a = colors->GetColor3d("IndianRed").GetData();
+    else
+        a = NULL;
+
+    return a;
 }
 

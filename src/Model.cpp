@@ -15,6 +15,10 @@
 #include <vtkMapper.h>
 #include <vtkInformation.h>
 #include <vtkShrinkFilter.h>
+#include <vtkUnstructuredGridGeometryFilter.h>
+#include <vtkLinearExtrusionFilter.h>
+#include <vtkPolyDataNormals.h>
+#include <vtkMeshQuality.h>
 
 
 Model::Model(MainWindow* aWin) 
@@ -81,6 +85,7 @@ void Model::SetModelToSelection()
 {
 	// Volume model
 	mModelVisible[0]->ShallowCopy(mSelection[0]);
+	
 	/*
 	selection[0]->Initialize();
 	vtkIdTypeArray* Ids = static_cast<vtkIdTypeArray*>(mModelVisible[0]->GetCellData()->GetArray("Element numbers"));
@@ -180,47 +185,101 @@ void Model::SetSelectionToInverse()
 
 	selection[0]->GetNode(0)->SetSelectionList(Ids1);*/
 }
-/*
-void Model::UpdateDerivedModel(int entity)
+
+void Model::GetDerivedModel(int entity)
 {
 	if (entity == 1) {
 		// Face model
+		mModelVisible[0]->GetCellData()->SetActiveGlobalIds("");
+		vtkSmartPointer<vtkUnstructuredGridGeometryFilter> gf = vtkSmartPointer<vtkUnstructuredGridGeometryFilter>::New();
+		gf->SetInputData(mModelVisible[0]);
+		gf->Update();
 		vtkSmartPointer<vtkShrinkFilter> sf = vtkSmartPointer<vtkShrinkFilter>::New();
-		sf->SetInputData(mModelVisible[0]);
+		sf->SetInputConnection(gf->GetOutputPort());
 		sf->SetShrinkFactor(0.8);
 		sf->Update();
-		vtkSmartPointer<vtkGeometryFilter> gf = vtkSmartPointer<vtkGeometryFilter>::New();
-		gf->SetInputConnection(sf->GetOutputPort());
-		gf->Update();
+		vtkSmartPointer<vtkGeometryFilter> gf2 = vtkSmartPointer<vtkGeometryFilter>::New();
+		gf2->SetInputConnection(sf->GetOutputPort());
+		gf2->Update();
+		vtkSmartPointer<vtkPolyDataNormals> pdn = vtkSmartPointer<vtkPolyDataNormals>::New();
+		pdn->SetInputConnection(gf2->GetOutputPort());
+		pdn->Update();
+		//vtkSmartPointer<vtkPolyData> shrink = sf->GetOutput();
+		vtkSmartPointer<vtkMeshQuality> mq = vtkSmartPointer<vtkMeshQuality>::New();
+		mq->SetInputConnection(pdn->GetOutputPort());
+		mq->SetTriangleQualityMeasureToRelativeSizeSquared();
+		mq->Update();
+		vtkDataArray* quality = mq->GetOutput()->GetCellData()->GetArray("Quality");
+		std::vector<double> aa;
+		for (int k = 0;k < quality->GetNumberOfTuples();k++)
+			aa.push_back(quality->GetTuple1(k));
+		double mean = std::accumulate(aa.begin(), aa.end(), 0.0) / aa.size();
+		vtkSmartPointer<vtkLinearExtrusionFilter> extf = vtkSmartPointer<vtkLinearExtrusionFilter>::New();
+		extf->SetInputConnection(pdn->GetOutputPort());
+		extf->SetExtrusionTypeToNormalExtrusion();
+		extf->SetCapping(TRUE);
+		extf->SetScaleFactor(0.1*sqrt(mean));
+		extf->Update();
 		vtkSmartPointer<vtkAppendFilter> af1 = vtkSmartPointer<vtkAppendFilter>::New();
-		af1->SetInputConnection(gf->GetOutputPort());
+		af1->SetInputConnection(extf->GetOutputPort());
 		af1->Update();
 		mModelVisible[1] = af1->GetOutput();
+		mModelVisible[0]->GetCellData()->SetActiveGlobalIds("Element numbers");
+		// Create a new global Id Array for selection operations
+		vtkIdTypeArray* Ids = vtkIdTypeArray::New();
+		Ids->SetName("Face numbers");
+		for (int k = 0;k < mModelVisible[1]->GetNumberOfCells();k++)
+			Ids->InsertNextTuple1(k);
+		mModelVisible[1]->GetCellData()->AddArray(Ids);
+		mModelVisible[1]->GetCellData()->SetActiveGlobalIds("Face numbers");
 
-		this->renumberEntities(mModelVisible[1]);
+		//this->renumberEntities(mModelVisible[1]);
 	}
 	else if (entity == 2) {
 		// Edge model
+		mModelVisible[0]->GetCellData()->SetActiveGlobalIds("");
+		vtkSmartPointer<vtkUnstructuredGridGeometryFilter> gf = vtkSmartPointer<vtkUnstructuredGridGeometryFilter>::New();
+		gf->SetInputData(mModelVisible[0]);
+		gf->Update();
 		vtkSmartPointer<vtkExtractEdges> ee2 = vtkSmartPointer<vtkExtractEdges>::New();
-		ee2->SetInputData(mModelVisible[0]);
+		ee2->SetInputConnection(gf->GetOutputPort());
 		ee2->Update();
 		vtkSmartPointer<vtkAppendFilter> af2 = vtkSmartPointer<vtkAppendFilter>::New();
 		af2->SetInputConnection(ee2->GetOutputPort());
 		af2->Update();
 		mModelVisible[2] = af2->GetOutput();
+		mModelVisible[0]->GetCellData()->SetActiveGlobalIds("Element numbers");
+		// Create a new global Id Array for selection operations
+		vtkIdTypeArray* Ids = vtkIdTypeArray::New();
+		Ids->SetName("Edge numbers");
+		for (int k = 0;k < mModelVisible[2]->GetNumberOfCells();k++)
+			Ids->InsertNextTuple1(k);
+		mModelVisible[2]->GetCellData()->AddArray(Ids);
+		mModelVisible[2]->GetCellData()->SetActiveGlobalIds("Edge numbers");
 
-		this->renumberEntities(mModelVisible[2]);
+		//this->renumberEntities(mModelVisible[2]);
 	}
 	else if (entity == 3) {
 		// Node model
+		mModelVisible[0]->GetPointData()->SetActiveGlobalIds("");
 		vtkSmartPointer<vtkExtractEdges> ee3 = vtkSmartPointer<vtkExtractEdges>::New();
 		ee3->SetInputData(mModelVisible[0]);
 		ee3->Update();
 
+		vtkSmartPointer<vtkMeshQuality> mq = vtkSmartPointer<vtkMeshQuality>::New();
+		mq->SetInputData(mModelVisible[0]);
+		mq->SetHexQualityMeasureToRelativeSizeSquared();
+		mq->Update();
+		vtkDataArray* quality = mq->GetOutput()->GetCellData()->GetArray("Quality");
+		std::vector<double> aa;
+		for (int k = 0;k < quality->GetNumberOfTuples();k++)
+			aa.push_back(quality->GetTuple1(k));
+		double dl = pow(std::accumulate(aa.begin(), aa.end(), 0.0) / aa.size(),1./3);
+
 		vtkNew<vtkCubeSource> cubeSource;
-		cubeSource->SetXLength(0.2);
-		cubeSource->SetYLength(0.2);
-		cubeSource->SetZLength(0.2);
+		cubeSource->SetXLength(0.2*dl);
+		cubeSource->SetYLength(0.2*dl);
+		cubeSource->SetZLength(0.2*dl);
 		vtkNew<vtkGlyph3D> glyph3D;
 		glyph3D->SetInputConnection(ee3->GetOutputPort());
 		glyph3D->SetSourceConnection(cubeSource->GetOutputPort());
@@ -231,14 +290,16 @@ void Model::UpdateDerivedModel(int entity)
 		af3->SetInputConnection(glyph3D->GetOutputPort());
 		af3->Update();
 		mModelVisible[3] = af3->GetOutput();
+		mModelVisible[0]->GetPointData()->SetActiveGlobalIds("Node numbers");
+		mModelVisible[3]->GetPointData()->SetActiveGlobalIds("Node numbers");
 	}
 	else {
 		//Error
 	}
 
-}*/
+}
 
-void Model::UpdateSelection(int entity,vtkSmartPointer<vtkSelectionNode> selNode,int selection_mode)
+void Model::UpdateSelection(int entity, vtkSmartPointer<vtkSelectionNode> selNode, int selection_mode)
 {
 	// Update the selection according to the selected boolean selection mode
 	vtkExtractSelection* ext = vtkExtractSelection::New();
@@ -282,6 +343,19 @@ void Model::UpdateSelection(int entity,vtkSmartPointer<vtkSelectionNode> selNode
 	}
 	else if (selection_mode == 2) {
 		std::set_difference(ids0.begin(), ids0.end(), ids1.begin(), ids1.end(), std::back_inserter(bool_op));
+		/*std::ofstream myfile;
+		myfile.open("sel0.txt");
+		for (std::vector<int>::iterator k = ids0.begin(); k < ids0.end(); k++)
+			myfile << k[0] << endl;
+		myfile.close();
+		myfile.open("sub.txt");
+		for (std::vector<int>::iterator k = ids1.begin(); k < ids1.end(); k++)
+			myfile << k[0] << endl;
+		myfile.close();
+		myfile.open("res.txt");
+		for (std::vector<int>::iterator k = bool_op.begin(); k < bool_op.end(); k++)
+			myfile << k[0] << endl;
+		myfile.close();*/
 	}
 	else if (selection_mode == 3) {
 		std::set_intersection(ids0.begin(), ids0.end(), ids1.begin(), ids1.end(), std::back_inserter(bool_op));
@@ -305,45 +379,31 @@ void Model::UpdateSelection(int entity,vtkSmartPointer<vtkSelectionNode> selNode
 	else {
 		ext->Update();
 		mSelection[entity]->ShallowCopy(ext->GetOutput());
-//		std::cout << mSelection[entity]->GetNumberOfCells() << endl;
+		//		std::cout << mSelection[entity]->GetNumberOfCells() << endl;
 
 		selection[entity]->GetNode(0)->GetProperties()->Set(vtkSelectionNode::INVERSE(), 1);
 		ext->Update();
 		mInverseSelection[entity]->ShallowCopy(ext->GetOutput());
 		//std::cout << mSelection[entity]->GetNumberOfCells() << endl;
-
-		//this->renumberEntities(mSelection[entity]);
-		//this->renumberEntities(mInverseSelection[entity]);
 	}
-
-	/*vtkSmartPointer<vtkXMLUnstructuredGridWriter> w = vtkSmartPointer<vtkXMLUnstructuredGridWriter>::New();
-	w->SetFileName("selection.vtu");
-	w->SetInputConnection(ext->GetOutputPort());
-	w->Write();*/
+	/*
+	if (mSelection[entity]->GetNumberOfCells()) {
+		vtkSmartPointer<vtkXMLUnstructuredGridWriter> w = vtkSmartPointer<vtkXMLUnstructuredGridWriter>::New();
+		w->SetFileName("selection.vtu");
+		w->SetInputData(mSelection[entity]);
+		w->Write();
+	}*/
 	
-}
-
-void Model::renumberEntities(vtkSmartPointer<vtkUnstructuredGrid> model)
-{
-	if (model->GetNumberOfCells()) {
-		vtkSmartPointer<vtkIdTypeArray> Ids = vtkSmartPointer<vtkIdTypeArray>::New();
-		Ids->SetName("Ids");
-		for (int k = 0;k < model->GetNumberOfCells();k++) {
-			Ids->InsertNextTuple1(k);
-		}
-		model->GetCellData()->GetAbstractArray("Ids")->DeepCopy(Ids);
-	}
 }
 
 vtkSmartPointer<vtkUnstructuredGrid> Model::GetVisibleModel(int entity)
 {
 	if (!mModelVisible[entity]) {
-		if (entity == 0)
+		if (entity == 0 || entity == 3)
 			// Error
 			return NULL;
 		else
-			return NULL;
-			//this->UpdateDerivedModels();
+			this->GetDerivedModel(entity);
 	}
 
 	return mModelVisible[entity];
@@ -356,15 +416,5 @@ vtkSmartPointer<vtkUnstructuredGrid> Model::GetSelection(int entity)
 		mInverseSelection[entity] = vtkSmartPointer<vtkUnstructuredGrid>::New();
 	}
 	return mSelection[entity];
-}
-
-void Model::shrinkFaceModel(double fac)
-{
-	vtkSmartPointer<vtkShrinkFilter> sf = vtkSmartPointer<vtkShrinkFilter>::New();
-	sf->SetInputData(mModelVisible[1]);
-	sf->SetShrinkFactor(fac);
-	sf->Update();
-
-	mModelVisible[1] = sf->GetOutput();
 }
 

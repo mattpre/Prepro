@@ -24,7 +24,10 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSlider>
+#include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QSplitter>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QToolBox>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 #include "qvtkopenglwidget.h"
@@ -39,59 +42,68 @@ public:
     QHBoxLayout *horizontalLayout;
     QVBoxLayout *verticalLayout_3;
     QGroupBox *mouseMode_gb;
-    QWidget *verticalLayoutWidget_4;
-    QVBoxLayout *verticalLayout_6;
+    QWidget *widget;
+    QHBoxLayout *horizontalLayout_7;
     QRadioButton *mouseModeOrient_rb;
     QRadioButton *mouseModeSel_rb;
+    QToolBox *toolBox;
+    QWidget *page1;
+    QWidget *widget1;
+    QVBoxLayout *verticalLayout_6;
     QGroupBox *selMode_gb;
-    QWidget *horizontalLayoutWidget;
-    QHBoxLayout *horizontalLayout_7;
-    QVBoxLayout *selection_vl;
+    QWidget *widget2;
+    QHBoxLayout *horizontalLayout_6;
+    QVBoxLayout *verticalLayout_8;
     QRadioButton *add_rb;
     QRadioButton *replace_rb;
     QRadioButton *subtract_rb;
     QRadioButton *reselect_rb;
-    QVBoxLayout *verticalLayout_9;
+    QVBoxLayout *verticalLayout_5;
     QPushButton *selectAll_pb;
     QPushButton *unselectAll_pb;
     QPushButton *selectInvert_pb;
-    QVBoxLayout *verticalLayout_8;
+    QSpacerItem *verticalSpacer;
+    QVBoxLayout *verticalLayout_7;
     QPushButton *showSelection_pb;
     QPushButton *hideSelection_pb;
     QPushButton *showAll_pb;
+    QSpacerItem *verticalSpacer_2;
     QGroupBox *selEntity_gb;
     QWidget *gridLayoutWidget;
     QGridLayout *gridLayout;
     QRadioButton *selFaces_rb;
     QRadioButton *selVolumes_rb;
-    QRadioButton *selEdges_rb;
     QRadioButton *selNodes_rb;
+    QRadioButton *selEdges_rb;
     QGroupBox *selMethod_gb;
-    QWidget *verticalLayoutWidget_5;
-    QVBoxLayout *verticalLayout_7;
+    QWidget *widget3;
+    QHBoxLayout *horizontalLayout_8;
     QRadioButton *selMethodBox_rb;
     QRadioButton *selMethodSlider_rb;
     QGroupBox *selSlide_gb;
-    QWidget *layoutWidget;
-    QVBoxLayout *verticalLayout_5;
-    QHBoxLayout *horizontalLayout_9;
-    QCheckBox *selBoxInside_cb;
-    QCheckBox *selBoxBoundary_cb;
-    QHBoxLayout *horizontalLayout_6;
-    QSlider *slideSelXm_slider;
-    QDoubleSpinBox *slideSelXm_spin;
-    QSlider *slideSelXp_slider;
-    QDoubleSpinBox *slideSelXp_spin;
-    QHBoxLayout *horizontalLayout_8;
+    QWidget *widget4;
+    QGridLayout *gridLayout_2;
+    QSplitter *splitter_3;
     QSlider *slideSelYm_slider;
     QDoubleSpinBox *slideSelYm_spin;
-    QSlider *slideSelYp_slider;
-    QDoubleSpinBox *slideSelYp_spin;
-    QHBoxLayout *horizontalLayout_10;
+    QSplitter *splitter;
     QSlider *slideSelZm_slider;
     QDoubleSpinBox *slideSelZm_spin;
+    QSplitter *splitter_2;
     QSlider *slideSelZp_slider;
     QDoubleSpinBox *slideSelZp_spin;
+    QSplitter *splitter_6;
+    QSlider *slideSelXp_slider;
+    QDoubleSpinBox *slideSelXp_spin;
+    QSplitter *splitter_4;
+    QSlider *slideSelYp_slider;
+    QDoubleSpinBox *slideSelYp_spin;
+    QSplitter *splitter_5;
+    QSlider *slideSelXm_slider;
+    QDoubleSpinBox *slideSelXm_spin;
+    QCheckBox *selBoxBoundary_cb;
+    QCheckBox *selBoxInside_cb;
+    QWidget *page2;
     QGroupBox *display_gb;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout_4;
@@ -101,6 +113,7 @@ public:
     QComboBox *displayVol_combo;
     QHBoxLayout *horizontalLayout_2;
     QLabel *label;
+    QSpacerItem *horizontalSpacer;
     QSlider *transpVol_slider;
     QHBoxLayout *horizontalLayout_13;
     QCheckBox *displayFac_cb;
@@ -108,6 +121,7 @@ public:
     QComboBox *displayFac_combo;
     QHBoxLayout *horizontalLayout_3;
     QLabel *label_2;
+    QSpacerItem *horizontalSpacer_2;
     QSlider *transpFac_slider;
     QHBoxLayout *horizontalLayout_14;
     QCheckBox *displayEdg_cb;
@@ -115,6 +129,7 @@ public:
     QComboBox *displayEdg_combo;
     QHBoxLayout *horizontalLayout_4;
     QLabel *label_3;
+    QSpacerItem *horizontalSpacer_3;
     QSlider *transpEdg_slider;
     QHBoxLayout *horizontalLayout_15;
     QCheckBox *displayNod_cb;
@@ -122,6 +137,7 @@ public:
     QComboBox *displayNod_combo;
     QHBoxLayout *horizontalLayout_5;
     QLabel *label_5;
+    QSpacerItem *horizontalSpacer_4;
     QSlider *transpNod_slider;
     QVBoxLayout *verticalLayout_2;
     QPushButton *loadMesh_button;
@@ -142,115 +158,151 @@ public:
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         verticalLayout_3 = new QVBoxLayout();
+        verticalLayout_3->setSpacing(6);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        verticalLayout_3->setSizeConstraint(QLayout::SetMinimumSize);
         mouseMode_gb = new QGroupBox(centralwidget);
         mouseMode_gb->setObjectName(QString::fromUtf8("mouseMode_gb"));
-        verticalLayoutWidget_4 = new QWidget(mouseMode_gb);
-        verticalLayoutWidget_4->setObjectName(QString::fromUtf8("verticalLayoutWidget_4"));
-        verticalLayoutWidget_4->setGeometry(QRect(10, 20, 160, 51));
-        verticalLayout_6 = new QVBoxLayout(verticalLayoutWidget_4);
-        verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
-        verticalLayout_6->setContentsMargins(0, 0, 0, 0);
-        mouseModeOrient_rb = new QRadioButton(verticalLayoutWidget_4);
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(mouseMode_gb->sizePolicy().hasHeightForWidth());
+        mouseMode_gb->setSizePolicy(sizePolicy);
+        mouseMode_gb->setMinimumSize(QSize(0, 44));
+        widget = new QWidget(mouseMode_gb);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setGeometry(QRect(10, 20, 291, 22));
+        horizontalLayout_7 = new QHBoxLayout(widget);
+        horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
+        horizontalLayout_7->setContentsMargins(0, 0, 0, 0);
+        mouseModeOrient_rb = new QRadioButton(widget);
         mouseModeOrient_rb->setObjectName(QString::fromUtf8("mouseModeOrient_rb"));
         mouseModeOrient_rb->setChecked(true);
 
-        verticalLayout_6->addWidget(mouseModeOrient_rb);
+        horizontalLayout_7->addWidget(mouseModeOrient_rb);
 
-        mouseModeSel_rb = new QRadioButton(verticalLayoutWidget_4);
+        mouseModeSel_rb = new QRadioButton(widget);
         mouseModeSel_rb->setObjectName(QString::fromUtf8("mouseModeSel_rb"));
 
-        verticalLayout_6->addWidget(mouseModeSel_rb);
+        horizontalLayout_7->addWidget(mouseModeSel_rb);
 
 
         verticalLayout_3->addWidget(mouseMode_gb);
 
-        selMode_gb = new QGroupBox(centralwidget);
+        toolBox = new QToolBox(centralwidget);
+        toolBox->setObjectName(QString::fromUtf8("toolBox"));
+        page1 = new QWidget();
+        page1->setObjectName(QString::fromUtf8("page1"));
+        page1->setGeometry(QRect(0, 0, 315, 671));
+        widget1 = new QWidget(page1);
+        widget1->setObjectName(QString::fromUtf8("widget1"));
+        widget1->setGeometry(QRect(0, 1, 311, 571));
+        verticalLayout_6 = new QVBoxLayout(widget1);
+        verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
+        verticalLayout_6->setContentsMargins(0, 0, 0, 0);
+        selMode_gb = new QGroupBox(widget1);
         selMode_gb->setObjectName(QString::fromUtf8("selMode_gb"));
         selMode_gb->setEnabled(false);
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(selMode_gb->sizePolicy().hasHeightForWidth());
+        selMode_gb->setSizePolicy(sizePolicy1);
+        selMode_gb->setMinimumSize(QSize(0, 172));
         selMode_gb->setCheckable(false);
         selMode_gb->setChecked(false);
-        horizontalLayoutWidget = new QWidget(selMode_gb);
-        horizontalLayoutWidget->setObjectName(QString::fromUtf8("horizontalLayoutWidget"));
-        horizontalLayoutWidget->setGeometry(QRect(10, 20, 291, 102));
-        horizontalLayout_7 = new QHBoxLayout(horizontalLayoutWidget);
-        horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
-        horizontalLayout_7->setContentsMargins(0, 0, 0, 0);
-        selection_vl = new QVBoxLayout();
-        selection_vl->setObjectName(QString::fromUtf8("selection_vl"));
-        add_rb = new QRadioButton(horizontalLayoutWidget);
+        widget2 = new QWidget(selMode_gb);
+        widget2->setObjectName(QString::fromUtf8("widget2"));
+        widget2->setGeometry(QRect(12, 22, 291, 148));
+        horizontalLayout_6 = new QHBoxLayout(widget2);
+        horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
+        horizontalLayout_6->setContentsMargins(0, 0, 0, 0);
+        verticalLayout_8 = new QVBoxLayout();
+        verticalLayout_8->setObjectName(QString::fromUtf8("verticalLayout_8"));
+        add_rb = new QRadioButton(widget2);
         add_rb->setObjectName(QString::fromUtf8("add_rb"));
         add_rb->setChecked(true);
 
-        selection_vl->addWidget(add_rb);
+        verticalLayout_8->addWidget(add_rb);
 
-        replace_rb = new QRadioButton(horizontalLayoutWidget);
+        replace_rb = new QRadioButton(widget2);
         replace_rb->setObjectName(QString::fromUtf8("replace_rb"));
 
-        selection_vl->addWidget(replace_rb);
+        verticalLayout_8->addWidget(replace_rb);
 
-        subtract_rb = new QRadioButton(horizontalLayoutWidget);
+        subtract_rb = new QRadioButton(widget2);
         subtract_rb->setObjectName(QString::fromUtf8("subtract_rb"));
 
-        selection_vl->addWidget(subtract_rb);
+        verticalLayout_8->addWidget(subtract_rb);
 
-        reselect_rb = new QRadioButton(horizontalLayoutWidget);
+        reselect_rb = new QRadioButton(widget2);
         reselect_rb->setObjectName(QString::fromUtf8("reselect_rb"));
 
-        selection_vl->addWidget(reselect_rb);
+        verticalLayout_8->addWidget(reselect_rb);
 
 
-        horizontalLayout_7->addLayout(selection_vl);
+        horizontalLayout_6->addLayout(verticalLayout_8);
 
-        verticalLayout_9 = new QVBoxLayout();
-        verticalLayout_9->setObjectName(QString::fromUtf8("verticalLayout_9"));
-        selectAll_pb = new QPushButton(horizontalLayoutWidget);
+        verticalLayout_5 = new QVBoxLayout();
+        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
+        selectAll_pb = new QPushButton(widget2);
         selectAll_pb->setObjectName(QString::fromUtf8("selectAll_pb"));
 
-        verticalLayout_9->addWidget(selectAll_pb);
+        verticalLayout_5->addWidget(selectAll_pb);
 
-        unselectAll_pb = new QPushButton(horizontalLayoutWidget);
+        unselectAll_pb = new QPushButton(widget2);
         unselectAll_pb->setObjectName(QString::fromUtf8("unselectAll_pb"));
 
-        verticalLayout_9->addWidget(unselectAll_pb);
+        verticalLayout_5->addWidget(unselectAll_pb);
 
-        selectInvert_pb = new QPushButton(horizontalLayoutWidget);
+        selectInvert_pb = new QPushButton(widget2);
         selectInvert_pb->setObjectName(QString::fromUtf8("selectInvert_pb"));
 
-        verticalLayout_9->addWidget(selectInvert_pb);
+        verticalLayout_5->addWidget(selectInvert_pb);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_5->addItem(verticalSpacer);
 
 
-        horizontalLayout_7->addLayout(verticalLayout_9);
+        horizontalLayout_6->addLayout(verticalLayout_5);
 
-        verticalLayout_8 = new QVBoxLayout();
-        verticalLayout_8->setObjectName(QString::fromUtf8("verticalLayout_8"));
-        showSelection_pb = new QPushButton(horizontalLayoutWidget);
+        verticalLayout_7 = new QVBoxLayout();
+        verticalLayout_7->setObjectName(QString::fromUtf8("verticalLayout_7"));
+        showSelection_pb = new QPushButton(widget2);
         showSelection_pb->setObjectName(QString::fromUtf8("showSelection_pb"));
 
-        verticalLayout_8->addWidget(showSelection_pb);
+        verticalLayout_7->addWidget(showSelection_pb);
 
-        hideSelection_pb = new QPushButton(horizontalLayoutWidget);
+        hideSelection_pb = new QPushButton(widget2);
         hideSelection_pb->setObjectName(QString::fromUtf8("hideSelection_pb"));
 
-        verticalLayout_8->addWidget(hideSelection_pb);
+        verticalLayout_7->addWidget(hideSelection_pb);
 
-        showAll_pb = new QPushButton(horizontalLayoutWidget);
+        showAll_pb = new QPushButton(widget2);
         showAll_pb->setObjectName(QString::fromUtf8("showAll_pb"));
 
-        verticalLayout_8->addWidget(showAll_pb);
+        verticalLayout_7->addWidget(showAll_pb);
+
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_7->addItem(verticalSpacer_2);
 
 
-        horizontalLayout_7->addLayout(verticalLayout_8);
+        horizontalLayout_6->addLayout(verticalLayout_7);
 
 
-        verticalLayout_3->addWidget(selMode_gb);
+        verticalLayout_6->addWidget(selMode_gb);
 
-        selEntity_gb = new QGroupBox(centralwidget);
+        selEntity_gb = new QGroupBox(widget1);
         selEntity_gb->setObjectName(QString::fromUtf8("selEntity_gb"));
         selEntity_gb->setEnabled(false);
+        sizePolicy1.setHeightForWidth(selEntity_gb->sizePolicy().hasHeightForWidth());
+        selEntity_gb->setSizePolicy(sizePolicy1);
+        selEntity_gb->setMinimumSize(QSize(0, 84));
         gridLayoutWidget = new QWidget(selEntity_gb);
         gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(10, 20, 291, 48));
+        gridLayoutWidget->setGeometry(QRect(10, 20, 291, 61));
         gridLayout = new QGridLayout(gridLayoutWidget);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
@@ -265,165 +317,171 @@ public:
 
         gridLayout->addWidget(selVolumes_rb, 0, 0, 1, 1);
 
-        selEdges_rb = new QRadioButton(gridLayoutWidget);
-        selEdges_rb->setObjectName(QString::fromUtf8("selEdges_rb"));
-
-        gridLayout->addWidget(selEdges_rb, 0, 1, 1, 1);
-
         selNodes_rb = new QRadioButton(gridLayoutWidget);
         selNodes_rb->setObjectName(QString::fromUtf8("selNodes_rb"));
 
         gridLayout->addWidget(selNodes_rb, 1, 1, 1, 1);
 
+        selEdges_rb = new QRadioButton(gridLayoutWidget);
+        selEdges_rb->setObjectName(QString::fromUtf8("selEdges_rb"));
 
-        verticalLayout_3->addWidget(selEntity_gb);
+        gridLayout->addWidget(selEdges_rb, 0, 1, 1, 1);
 
-        selMethod_gb = new QGroupBox(centralwidget);
+
+        verticalLayout_6->addWidget(selEntity_gb);
+
+        selMethod_gb = new QGroupBox(widget1);
         selMethod_gb->setObjectName(QString::fromUtf8("selMethod_gb"));
         selMethod_gb->setEnabled(false);
-        verticalLayoutWidget_5 = new QWidget(selMethod_gb);
-        verticalLayoutWidget_5->setObjectName(QString::fromUtf8("verticalLayoutWidget_5"));
-        verticalLayoutWidget_5->setGeometry(QRect(10, 20, 160, 51));
-        verticalLayout_7 = new QVBoxLayout(verticalLayoutWidget_5);
-        verticalLayout_7->setObjectName(QString::fromUtf8("verticalLayout_7"));
-        verticalLayout_7->setContentsMargins(0, 0, 0, 0);
-        selMethodBox_rb = new QRadioButton(verticalLayoutWidget_5);
+        sizePolicy1.setHeightForWidth(selMethod_gb->sizePolicy().hasHeightForWidth());
+        selMethod_gb->setSizePolicy(sizePolicy1);
+        selMethod_gb->setMinimumSize(QSize(0, 49));
+        widget3 = new QWidget(selMethod_gb);
+        widget3->setObjectName(QString::fromUtf8("widget3"));
+        widget3->setGeometry(QRect(10, 20, 291, 22));
+        horizontalLayout_8 = new QHBoxLayout(widget3);
+        horizontalLayout_8->setObjectName(QString::fromUtf8("horizontalLayout_8"));
+        horizontalLayout_8->setContentsMargins(0, 0, 0, 0);
+        selMethodBox_rb = new QRadioButton(widget3);
         selMethodBox_rb->setObjectName(QString::fromUtf8("selMethodBox_rb"));
         selMethodBox_rb->setChecked(true);
 
-        verticalLayout_7->addWidget(selMethodBox_rb);
+        horizontalLayout_8->addWidget(selMethodBox_rb);
 
-        selMethodSlider_rb = new QRadioButton(verticalLayoutWidget_5);
+        selMethodSlider_rb = new QRadioButton(widget3);
         selMethodSlider_rb->setObjectName(QString::fromUtf8("selMethodSlider_rb"));
 
-        verticalLayout_7->addWidget(selMethodSlider_rb);
+        horizontalLayout_8->addWidget(selMethodSlider_rb);
 
 
-        verticalLayout_3->addWidget(selMethod_gb);
+        verticalLayout_6->addWidget(selMethod_gb);
 
-        selSlide_gb = new QGroupBox(centralwidget);
+        selSlide_gb = new QGroupBox(widget1);
         selSlide_gb->setObjectName(QString::fromUtf8("selSlide_gb"));
         selSlide_gb->setEnabled(false);
-        layoutWidget = new QWidget(selSlide_gb);
-        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 10, 301, 146));
-        verticalLayout_5 = new QVBoxLayout(layoutWidget);
-        verticalLayout_5->setSpacing(6);
-        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
-        verticalLayout_5->setSizeConstraint(QLayout::SetNoConstraint);
-        verticalLayout_5->setContentsMargins(0, 0, 0, 0);
-        horizontalLayout_9 = new QHBoxLayout();
-        horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
-        selBoxInside_cb = new QCheckBox(layoutWidget);
-        selBoxInside_cb->setObjectName(QString::fromUtf8("selBoxInside_cb"));
-        selBoxInside_cb->setChecked(true);
-
-        horizontalLayout_9->addWidget(selBoxInside_cb);
-
-        selBoxBoundary_cb = new QCheckBox(layoutWidget);
-        selBoxBoundary_cb->setObjectName(QString::fromUtf8("selBoxBoundary_cb"));
-
-        horizontalLayout_9->addWidget(selBoxBoundary_cb);
-
-
-        verticalLayout_5->addLayout(horizontalLayout_9);
-
-        horizontalLayout_6 = new QHBoxLayout();
-        horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
-        slideSelXm_slider = new QSlider(layoutWidget);
-        slideSelXm_slider->setObjectName(QString::fromUtf8("slideSelXm_slider"));
-        slideSelXm_slider->setMaximum(100);
-        slideSelXm_slider->setOrientation(Qt::Horizontal);
-
-        horizontalLayout_6->addWidget(slideSelXm_slider);
-
-        slideSelXm_spin = new QDoubleSpinBox(layoutWidget);
-        slideSelXm_spin->setObjectName(QString::fromUtf8("slideSelXm_spin"));
-
-        horizontalLayout_6->addWidget(slideSelXm_spin);
-
-        slideSelXp_slider = new QSlider(layoutWidget);
-        slideSelXp_slider->setObjectName(QString::fromUtf8("slideSelXp_slider"));
-        slideSelXp_slider->setMaximum(100);
-        slideSelXp_slider->setOrientation(Qt::Horizontal);
-
-        horizontalLayout_6->addWidget(slideSelXp_slider);
-
-        slideSelXp_spin = new QDoubleSpinBox(layoutWidget);
-        slideSelXp_spin->setObjectName(QString::fromUtf8("slideSelXp_spin"));
-
-        horizontalLayout_6->addWidget(slideSelXp_spin);
-
-
-        verticalLayout_5->addLayout(horizontalLayout_6);
-
-        horizontalLayout_8 = new QHBoxLayout();
-        horizontalLayout_8->setObjectName(QString::fromUtf8("horizontalLayout_8"));
-        slideSelYm_slider = new QSlider(layoutWidget);
+        sizePolicy.setHeightForWidth(selSlide_gb->sizePolicy().hasHeightForWidth());
+        selSlide_gb->setSizePolicy(sizePolicy);
+        selSlide_gb->setMinimumSize(QSize(0, 138));
+        selSlide_gb->setCheckable(false);
+        widget4 = new QWidget(selSlide_gb);
+        widget4->setObjectName(QString::fromUtf8("widget4"));
+        widget4->setGeometry(QRect(10, 20, 301, 106));
+        gridLayout_2 = new QGridLayout(widget4);
+        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
+        gridLayout_2->setContentsMargins(0, 0, 0, 0);
+        splitter_3 = new QSplitter(widget4);
+        splitter_3->setObjectName(QString::fromUtf8("splitter_3"));
+        splitter_3->setOrientation(Qt::Horizontal);
+        slideSelYm_slider = new QSlider(splitter_3);
         slideSelYm_slider->setObjectName(QString::fromUtf8("slideSelYm_slider"));
         slideSelYm_slider->setMaximum(100);
         slideSelYm_slider->setOrientation(Qt::Horizontal);
-
-        horizontalLayout_8->addWidget(slideSelYm_slider);
-
-        slideSelYm_spin = new QDoubleSpinBox(layoutWidget);
+        splitter_3->addWidget(slideSelYm_slider);
+        slideSelYm_spin = new QDoubleSpinBox(splitter_3);
         slideSelYm_spin->setObjectName(QString::fromUtf8("slideSelYm_spin"));
+        splitter_3->addWidget(slideSelYm_spin);
 
-        horizontalLayout_8->addWidget(slideSelYm_spin);
+        gridLayout_2->addWidget(splitter_3, 3, 0, 1, 1);
 
-        slideSelYp_slider = new QSlider(layoutWidget);
-        slideSelYp_slider->setObjectName(QString::fromUtf8("slideSelYp_slider"));
-        slideSelYp_slider->setMaximum(100);
-        slideSelYp_slider->setOrientation(Qt::Horizontal);
-
-        horizontalLayout_8->addWidget(slideSelYp_slider);
-
-        slideSelYp_spin = new QDoubleSpinBox(layoutWidget);
-        slideSelYp_spin->setObjectName(QString::fromUtf8("slideSelYp_spin"));
-
-        horizontalLayout_8->addWidget(slideSelYp_spin);
-
-
-        verticalLayout_5->addLayout(horizontalLayout_8);
-
-        horizontalLayout_10 = new QHBoxLayout();
-        horizontalLayout_10->setObjectName(QString::fromUtf8("horizontalLayout_10"));
-        slideSelZm_slider = new QSlider(layoutWidget);
+        splitter = new QSplitter(widget4);
+        splitter->setObjectName(QString::fromUtf8("splitter"));
+        splitter->setOrientation(Qt::Horizontal);
+        slideSelZm_slider = new QSlider(splitter);
         slideSelZm_slider->setObjectName(QString::fromUtf8("slideSelZm_slider"));
         slideSelZm_slider->setMaximum(100);
         slideSelZm_slider->setOrientation(Qt::Horizontal);
-
-        horizontalLayout_10->addWidget(slideSelZm_slider);
-
-        slideSelZm_spin = new QDoubleSpinBox(layoutWidget);
+        splitter->addWidget(slideSelZm_slider);
+        slideSelZm_spin = new QDoubleSpinBox(splitter);
         slideSelZm_spin->setObjectName(QString::fromUtf8("slideSelZm_spin"));
+        splitter->addWidget(slideSelZm_spin);
 
-        horizontalLayout_10->addWidget(slideSelZm_spin);
+        gridLayout_2->addWidget(splitter, 4, 0, 1, 1);
 
-        slideSelZp_slider = new QSlider(layoutWidget);
+        splitter_2 = new QSplitter(widget4);
+        splitter_2->setObjectName(QString::fromUtf8("splitter_2"));
+        splitter_2->setOrientation(Qt::Horizontal);
+        slideSelZp_slider = new QSlider(splitter_2);
         slideSelZp_slider->setObjectName(QString::fromUtf8("slideSelZp_slider"));
         slideSelZp_slider->setMaximum(100);
         slideSelZp_slider->setOrientation(Qt::Horizontal);
-
-        horizontalLayout_10->addWidget(slideSelZp_slider);
-
-        slideSelZp_spin = new QDoubleSpinBox(layoutWidget);
+        splitter_2->addWidget(slideSelZp_slider);
+        slideSelZp_spin = new QDoubleSpinBox(splitter_2);
         slideSelZp_spin->setObjectName(QString::fromUtf8("slideSelZp_spin"));
+        splitter_2->addWidget(slideSelZp_spin);
 
-        horizontalLayout_10->addWidget(slideSelZp_spin);
+        gridLayout_2->addWidget(splitter_2, 4, 1, 1, 1);
+
+        splitter_6 = new QSplitter(widget4);
+        splitter_6->setObjectName(QString::fromUtf8("splitter_6"));
+        splitter_6->setOrientation(Qt::Horizontal);
+        slideSelXp_slider = new QSlider(splitter_6);
+        slideSelXp_slider->setObjectName(QString::fromUtf8("slideSelXp_slider"));
+        slideSelXp_slider->setMaximum(100);
+        slideSelXp_slider->setOrientation(Qt::Horizontal);
+        splitter_6->addWidget(slideSelXp_slider);
+        slideSelXp_spin = new QDoubleSpinBox(splitter_6);
+        slideSelXp_spin->setObjectName(QString::fromUtf8("slideSelXp_spin"));
+        splitter_6->addWidget(slideSelXp_spin);
+
+        gridLayout_2->addWidget(splitter_6, 2, 1, 1, 1);
+
+        splitter_4 = new QSplitter(widget4);
+        splitter_4->setObjectName(QString::fromUtf8("splitter_4"));
+        splitter_4->setOrientation(Qt::Horizontal);
+        slideSelYp_slider = new QSlider(splitter_4);
+        slideSelYp_slider->setObjectName(QString::fromUtf8("slideSelYp_slider"));
+        slideSelYp_slider->setMaximum(100);
+        slideSelYp_slider->setOrientation(Qt::Horizontal);
+        splitter_4->addWidget(slideSelYp_slider);
+        slideSelYp_spin = new QDoubleSpinBox(splitter_4);
+        slideSelYp_spin->setObjectName(QString::fromUtf8("slideSelYp_spin"));
+        splitter_4->addWidget(slideSelYp_spin);
+
+        gridLayout_2->addWidget(splitter_4, 3, 1, 1, 1);
+
+        splitter_5 = new QSplitter(widget4);
+        splitter_5->setObjectName(QString::fromUtf8("splitter_5"));
+        splitter_5->setOrientation(Qt::Horizontal);
+        slideSelXm_slider = new QSlider(splitter_5);
+        slideSelXm_slider->setObjectName(QString::fromUtf8("slideSelXm_slider"));
+        slideSelXm_slider->setMaximum(100);
+        slideSelXm_slider->setOrientation(Qt::Horizontal);
+        splitter_5->addWidget(slideSelXm_slider);
+        slideSelXm_spin = new QDoubleSpinBox(splitter_5);
+        slideSelXm_spin->setObjectName(QString::fromUtf8("slideSelXm_spin"));
+        splitter_5->addWidget(slideSelXm_spin);
+
+        gridLayout_2->addWidget(splitter_5, 2, 0, 1, 1);
+
+        selBoxBoundary_cb = new QCheckBox(widget4);
+        selBoxBoundary_cb->setObjectName(QString::fromUtf8("selBoxBoundary_cb"));
+
+        gridLayout_2->addWidget(selBoxBoundary_cb, 0, 1, 1, 1);
+
+        selBoxInside_cb = new QCheckBox(widget4);
+        selBoxInside_cb->setObjectName(QString::fromUtf8("selBoxInside_cb"));
+        selBoxInside_cb->setChecked(true);
+
+        gridLayout_2->addWidget(selBoxInside_cb, 0, 0, 1, 1);
 
 
-        verticalLayout_5->addLayout(horizontalLayout_10);
+        verticalLayout_6->addWidget(selSlide_gb);
 
-
-        verticalLayout_3->addWidget(selSlide_gb);
-
-        display_gb = new QGroupBox(centralwidget);
+        toolBox->addItem(page1, QString::fromUtf8("Selection"));
+        page2 = new QWidget();
+        page2->setObjectName(QString::fromUtf8("page2"));
+        page2->setGeometry(QRect(0, 0, 315, 671));
+        display_gb = new QGroupBox(page2);
         display_gb->setObjectName(QString::fromUtf8("display_gb"));
+        display_gb->setGeometry(QRect(0, 0, 315, 368));
+        sizePolicy.setHeightForWidth(display_gb->sizePolicy().hasHeightForWidth());
+        display_gb->setSizePolicy(sizePolicy);
+        display_gb->setMinimumSize(QSize(0, 368));
         verticalLayoutWidget = new QWidget(display_gb);
         verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(10, 20, 160, 346));
+        verticalLayoutWidget->setGeometry(QRect(10, 20, 291, 346));
         verticalLayout_4 = new QVBoxLayout(verticalLayoutWidget);
+        verticalLayout_4->setSpacing(2);
         verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
         verticalLayout_4->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_12 = new QHBoxLayout();
@@ -462,6 +520,10 @@ public:
         label->setObjectName(QString::fromUtf8("label"));
 
         horizontalLayout_2->addWidget(label);
+
+        horizontalSpacer = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+        horizontalLayout_2->addItem(horizontalSpacer);
 
         transpVol_slider = new QSlider(verticalLayoutWidget);
         transpVol_slider->setObjectName(QString::fromUtf8("transpVol_slider"));
@@ -507,6 +569,10 @@ public:
 
         horizontalLayout_3->addWidget(label_2);
 
+        horizontalSpacer_2 = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+        horizontalLayout_3->addItem(horizontalSpacer_2);
+
         transpFac_slider = new QSlider(verticalLayoutWidget);
         transpFac_slider->setObjectName(QString::fromUtf8("transpFac_slider"));
         transpFac_slider->setMaximum(100);
@@ -548,6 +614,10 @@ public:
         label_3->setObjectName(QString::fromUtf8("label_3"));
 
         horizontalLayout_4->addWidget(label_3);
+
+        horizontalSpacer_3 = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+        horizontalLayout_4->addItem(horizontalSpacer_3);
 
         transpEdg_slider = new QSlider(verticalLayoutWidget);
         transpEdg_slider->setObjectName(QString::fromUtf8("transpEdg_slider"));
@@ -591,6 +661,10 @@ public:
 
         horizontalLayout_5->addWidget(label_5);
 
+        horizontalSpacer_4 = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+        horizontalLayout_5->addItem(horizontalSpacer_4);
+
         transpNod_slider = new QSlider(verticalLayoutWidget);
         transpNod_slider->setObjectName(QString::fromUtf8("transpNod_slider"));
         transpNod_slider->setMaximum(100);
@@ -601,15 +675,10 @@ public:
 
         verticalLayout_4->addLayout(horizontalLayout_5);
 
+        toolBox->addItem(page2, QString::fromUtf8("Display"));
 
-        verticalLayout_3->addWidget(display_gb);
+        verticalLayout_3->addWidget(toolBox);
 
-        verticalLayout_3->setStretch(0, 1);
-        verticalLayout_3->setStretch(1, 2);
-        verticalLayout_3->setStretch(2, 1);
-        verticalLayout_3->setStretch(3, 1);
-        verticalLayout_3->setStretch(4, 2);
-        verticalLayout_3->setStretch(5, 4);
 
         horizontalLayout->addLayout(verticalLayout_3);
 
@@ -644,6 +713,9 @@ public:
 
         retranslateUi(MainWindow);
 
+        toolBox->setCurrentIndex(0);
+
+
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
 
@@ -667,14 +739,15 @@ public:
         selEntity_gb->setTitle(QCoreApplication::translate("MainWindow", "Selection entity", nullptr));
         selFaces_rb->setText(QCoreApplication::translate("MainWindow", "Faces", nullptr));
         selVolumes_rb->setText(QCoreApplication::translate("MainWindow", "Volumes", nullptr));
-        selEdges_rb->setText(QCoreApplication::translate("MainWindow", "Edges", nullptr));
         selNodes_rb->setText(QCoreApplication::translate("MainWindow", "Nodes", nullptr));
+        selEdges_rb->setText(QCoreApplication::translate("MainWindow", "Edges", nullptr));
         selMethod_gb->setTitle(QCoreApplication::translate("MainWindow", "Selection method", nullptr));
         selMethodBox_rb->setText(QCoreApplication::translate("MainWindow", "Box select", nullptr));
         selMethodSlider_rb->setText(QCoreApplication::translate("MainWindow", "Slider select", nullptr));
-        selSlide_gb->setTitle(QString());
-        selBoxInside_cb->setText(QCoreApplication::translate("MainWindow", "Select inside", nullptr));
+        selSlide_gb->setTitle(QCoreApplication::translate("MainWindow", "Box selection", nullptr));
         selBoxBoundary_cb->setText(QCoreApplication::translate("MainWindow", "Select boundary cells", nullptr));
+        selBoxInside_cb->setText(QCoreApplication::translate("MainWindow", "Select inside", nullptr));
+        toolBox->setItemText(toolBox->indexOf(page1), QCoreApplication::translate("MainWindow", "Selection", nullptr));
         display_gb->setTitle(QCoreApplication::translate("MainWindow", "Display", nullptr));
         displayVol_cb->setText(QCoreApplication::translate("MainWindow", "Volumes", nullptr));
         displayVolSel_cb->setText(QCoreApplication::translate("MainWindow", "Selection", nullptr));
@@ -702,6 +775,7 @@ public:
         displayNod_combo->setItemText(1, QCoreApplication::translate("MainWindow", "Spheres", nullptr));
 
         label_5->setText(QCoreApplication::translate("MainWindow", "Transparency", nullptr));
+        toolBox->setItemText(toolBox->indexOf(page2), QCoreApplication::translate("MainWindow", "Display", nullptr));
         loadMesh_button->setText(QCoreApplication::translate("MainWindow", "Load Mesh", nullptr));
     } // retranslateUi
 
