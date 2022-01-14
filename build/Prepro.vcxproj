@@ -347,7 +347,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <OptimizeReferences>true</OptimizeReferences>
       <ProgramDataBaseFile>C:/Mandats/M100/dev/vtkQt/prepro/build/RelWithDebInfo/Prepro.pdb</ProgramDataBaseFile>
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -356,7 +356,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   <ItemGroup>
     <CustomBuild Include="C:\Mandats\M100\dev\vtkQt\prepro\build\CMakeFiles\0ff5bf42931c3eb8a48becf2ba4ad214\autouic_(CONFIG).stamp.rule">
       <UseUtf8Encoding>Always</UseUtf8Encoding>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"></Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
 cd C:\Mandats\M100\dev\vtkQt\prepro\build
 if %errorlevel% neq 0 goto :cmEnd
@@ -371,7 +372,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Mandats\M100\dev\vtkQt\prepro\forms\MainWindow.ui;C:\Qt\6.2.2\msvc2019_64\.\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Mandats\M100\dev\vtkQt\prepro\build\Prepro_autogen\autouic_Debug.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'"></Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
 cd C:\Mandats\M100\dev\vtkQt\prepro\build
 if %errorlevel% neq 0 goto :cmEnd
@@ -386,7 +388,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Mandats\M100\dev\vtkQt\prepro\forms\MainWindow.ui;C:\Qt\6.2.2\msvc2019_64\.\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Mandats\M100\dev\vtkQt\prepro\build\Prepro_autogen\autouic_Release.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'"></Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+      </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
 cd C:\Mandats\M100\dev\vtkQt\prepro\build
 if %errorlevel% neq 0 goto :cmEnd
@@ -401,7 +404,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Mandats\M100\dev\vtkQt\prepro\forms\MainWindow.ui;C:\Qt\6.2.2\msvc2019_64\.\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Mandats\M100\dev\vtkQt\prepro\build\Prepro_autogen\autouic_MinSizeRel.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'"></Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+      </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
 cd C:\Mandats\M100\dev\vtkQt\prepro\build
 if %errorlevel% neq 0 goto :cmEnd

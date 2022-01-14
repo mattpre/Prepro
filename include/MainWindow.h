@@ -39,6 +39,8 @@ private:
 
     Model* model;
 
+    std::vector<vtkUnstructuredGrid*> collections;
+
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -50,13 +52,14 @@ public:
     vtkSmartPointer<vtkActor> giveSelectionActor(int);
     double* getColors(vtkStdString);
     void initializeSelectionSlider();
+    void initializeActors();
     void updateSelFunRepresentation();
     void updateSelectionFunction();
+    void updateSelectionActors();
 
 public slots:
     void onLoadMeshClick();
     void updateView();
-    void updateSelection();
     void onSelectionModeClick();
     void onMouseModeClick();
     void onSelectionMethodClick();
@@ -71,19 +74,17 @@ public slots:
     void onSelectAllClick();
     void onSelectionInvertClick();
     void onUnselectAllClick();
+    void onExportAddClick();
+    void onExportClick();
+    void onParallelProjectionClick();
+    void onViewDirectionClick();
+    void onDisplayVolClick();
+    void onDisplayFacClick();
+    void onDisplayEdgClick();
+    void onDisplayNodClick();
 
-    void updateSpinValueXm(int);
-    void updateSpinValueXp(int);
-    void updateSpinValueYm(int);
-    void updateSpinValueYp(int);
-    void updateSpinValueZm(int);
-    void updateSpinValueZp(int);
-    void updateSlideValueXm(double);
-    void updateSlideValueXp(double);
-    void updateSlideValueYm(double);
-    void updateSlideValueYp(double);
-    void updateSlideValueZm(double);
-    void updateSlideValueZp(double);
+    void updateSpinValue(int);
+    void updateSlideValue(double);
 };
 
 #endif // MAINWINDOW_H

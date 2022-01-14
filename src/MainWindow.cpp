@@ -5,6 +5,7 @@
 #include <vtkXMLUnstructuredGridReader.h>
 #include <vtkUnstructuredGrid.h>
 #include <vtkActor.h>
+#include <vtkCamera.h>
 #include <vtkProperty.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkDataSetMapper.h>
@@ -19,6 +20,7 @@
 #include <vtkBox.h>
 #include <vtkCubeSource.h>
 #include <vtkCellData.h>
+#include <vtkXMLUnstructuredGridWriter.h>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -46,22 +48,17 @@ MainWindow::MainWindow(QWidget *parent) :
     mInteractor->SetPicker(areaPicker);
     mInteractor->Initialize();
 
-    for (int k = 0;k < 4;k++) {
-        mActor[k] = vtkSmartPointer<vtkActor>::New();
-        mSelActor[k] = vtkSmartPointer<vtkActor>::New();
-    }
-    mSelFunActor = vtkSmartPointer<vtkActor>::New();
+    this->initializeActors();
 
     // Set the background color
     mRenderer->SetBackground(0, 0, 0);
 
     // Set the UI connections
     QObject::connect(ui->loadMesh_button, &QPushButton::clicked, this, &MainWindow::onLoadMeshClick);
-    QObject::connect(ui->displayCheckBox_bg, &QButtonGroup::buttonClicked, this, &MainWindow::updateView);
-    QObject::connect(ui->displayVol_combo, &QComboBox::currentIndexChanged, this, &MainWindow::updateView);
-    QObject::connect(ui->displayFac_combo, &QComboBox::currentIndexChanged, this, &MainWindow::updateView);
-    QObject::connect(ui->displayEdg_combo, &QComboBox::currentIndexChanged, this, &MainWindow::updateView);
-    QObject::connect(ui->displayNod_combo, &QComboBox::currentIndexChanged, this, &MainWindow::updateView);
+    QObject::connect(ui->displayVol_combo, &QComboBox::currentIndexChanged, this, &MainWindow::onDisplayVolClick);
+    QObject::connect(ui->displayFac_combo, &QComboBox::currentIndexChanged, this, &MainWindow::onDisplayFacClick);
+    QObject::connect(ui->displayEdg_combo, &QComboBox::currentIndexChanged, this, &MainWindow::onDisplayEdgClick);
+    QObject::connect(ui->displayNod_combo, &QComboBox::currentIndexChanged, this, &MainWindow::onDisplayNodClick);
     QObject::connect(ui->add_rb, &QRadioButton::clicked, this, &MainWindow::onSelectionModeClick);
     QObject::connect(ui->replace_rb, &QRadioButton::clicked, this, &MainWindow::onSelectionModeClick);
     QObject::connect(ui->subtract_rb, &QRadioButton::clicked, this, &MainWindow::onSelectionModeClick);
@@ -79,26 +76,90 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->selBoxInside_cb, &QCheckBox::clicked, this, &MainWindow::updateSelectionFunction);
     QObject::connect(ui->selBoxBoundary_cb, &QCheckBox::clicked, this, &MainWindow::updateSelectionFunction);
 
+    // Display page
+    QObject::connect(ui->displayVol_cb, &QCheckBox::clicked, this, &MainWindow::onDisplayVolClick);
+    QObject::connect(ui->displayVolSel_cb, &QCheckBox::clicked, this, &MainWindow::onDisplayVolClick);
+    QObject::connect(ui->displayFac_cb, &QCheckBox::clicked, this, &MainWindow::onDisplayFacClick);
+    QObject::connect(ui->displayFacSel_cb, &QCheckBox::clicked, this, &MainWindow::onDisplayFacClick);
+    QObject::connect(ui->displayEdg_cb, &QCheckBox::clicked, this, &MainWindow::onDisplayEdgClick);
+    QObject::connect(ui->displayEdgSel_cb, &QCheckBox::clicked, this, &MainWindow::onDisplayEdgClick);
+    QObject::connect(ui->displayNod_cb, &QCheckBox::clicked, this, &MainWindow::onDisplayNodClick);
+    QObject::connect(ui->displayNodSel_cb, &QCheckBox::clicked, this, &MainWindow::onDisplayNodClick);
+
+    // View page
+    QObject::connect(ui->viewParallelProjection_cb, &QPushButton::clicked, this, &MainWindow::onParallelProjectionClick);
+    QObject::connect(ui->viewXm_pb, &QPushButton::clicked, this, &MainWindow::onViewDirectionClick);
+    QObject::connect(ui->viewXp_pb, &QPushButton::clicked, this, &MainWindow::onViewDirectionClick);
+    QObject::connect(ui->viewYm_pb, &QPushButton::clicked, this, &MainWindow::onViewDirectionClick);
+    QObject::connect(ui->viewYp_pb, &QPushButton::clicked, this, &MainWindow::onViewDirectionClick);
+    QObject::connect(ui->viewZm_pb, &QPushButton::clicked, this, &MainWindow::onViewDirectionClick);
+    QObject::connect(ui->viewZp_pb, &QPushButton::clicked, this, &MainWindow::onViewDirectionClick);
+
     QObject::connect(ui->transpVol_slider, &QSlider::valueChanged, this, &MainWindow::onTranspVolSliderMoved);
     QObject::connect(ui->transpFac_slider, &QSlider::valueChanged, this, &MainWindow::onTranspFacSliderMoved);
     QObject::connect(ui->transpEdg_slider, &QSlider::valueChanged, this, &MainWindow::onTranspEdgSliderMoved);
     QObject::connect(ui->transpNod_slider, &QSlider::valueChanged, this, &MainWindow::onTranspNodSliderMoved);
-    QObject::connect(ui->slideSelXm_slider, &QSlider::valueChanged, this, &MainWindow::updateSpinValueXm);
-    QObject::connect(ui->slideSelXp_slider, &QSlider::valueChanged, this, &MainWindow::updateSpinValueXp);
-    QObject::connect(ui->slideSelYm_slider, &QSlider::valueChanged, this, &MainWindow::updateSpinValueYm);
-    QObject::connect(ui->slideSelYp_slider, &QSlider::valueChanged, this, &MainWindow::updateSpinValueYp);
-    QObject::connect(ui->slideSelZm_slider, &QSlider::valueChanged, this, &MainWindow::updateSpinValueZm);
-    QObject::connect(ui->slideSelZp_slider, &QSlider::valueChanged, this, &MainWindow::updateSpinValueZp);
-    QObject::connect(ui->slideSelXm_spin, &QDoubleSpinBox::valueChanged, this, &MainWindow::updateSlideValueXm);
-    QObject::connect(ui->slideSelXp_spin, &QDoubleSpinBox::valueChanged, this, &MainWindow::updateSlideValueXp);
-    QObject::connect(ui->slideSelYm_spin, &QDoubleSpinBox::valueChanged, this, &MainWindow::updateSlideValueYm);
-    QObject::connect(ui->slideSelYp_spin, &QDoubleSpinBox::valueChanged, this, &MainWindow::updateSlideValueYp);
-    QObject::connect(ui->slideSelZm_spin, &QDoubleSpinBox::valueChanged, this, &MainWindow::updateSlideValueZm);
-    QObject::connect(ui->slideSelZp_spin, &QDoubleSpinBox::valueChanged, this, &MainWindow::updateSlideValueZp);
+    QObject::connect(ui->slideSelXm_slider, &QSlider::valueChanged, this, &MainWindow::updateSpinValue);
+    QObject::connect(ui->slideSelXp_slider, &QSlider::valueChanged, this, &MainWindow::updateSpinValue);
+    QObject::connect(ui->slideSelYm_slider, &QSlider::valueChanged, this, &MainWindow::updateSpinValue);
+    QObject::connect(ui->slideSelYp_slider, &QSlider::valueChanged, this, &MainWindow::updateSpinValue);
+    QObject::connect(ui->slideSelZm_slider, &QSlider::valueChanged, this, &MainWindow::updateSpinValue);
+    QObject::connect(ui->slideSelZp_slider, &QSlider::valueChanged, this, &MainWindow::updateSpinValue);
+    QObject::connect(ui->slideSelXm_spin, &QDoubleSpinBox::valueChanged, this, &MainWindow::updateSlideValue);
+    QObject::connect(ui->slideSelXp_spin, &QDoubleSpinBox::valueChanged, this, &MainWindow::updateSlideValue);
+    QObject::connect(ui->slideSelYm_spin, &QDoubleSpinBox::valueChanged, this, &MainWindow::updateSlideValue);
+    QObject::connect(ui->slideSelYp_spin, &QDoubleSpinBox::valueChanged, this, &MainWindow::updateSlideValue);
+    QObject::connect(ui->slideSelZm_spin, &QDoubleSpinBox::valueChanged, this, &MainWindow::updateSlideValue);
+    QObject::connect(ui->slideSelZp_spin, &QDoubleSpinBox::valueChanged, this, &MainWindow::updateSlideValue);
+
+    // Export collections
+    QObject::connect(ui->expAddVol_pb, &QPushButton::clicked, this, &MainWindow::onExportAddClick);
+    QObject::connect(ui->expAddFac_pb, &QPushButton::clicked, this, &MainWindow::onExportAddClick);
+    QObject::connect(ui->expAddEdg_pb, &QPushButton::clicked, this, &MainWindow::onExportAddClick);
+    QObject::connect(ui->expAddNod_pb, &QPushButton::clicked, this, &MainWindow::onExportAddClick);
+    QObject::connect(ui->exportCollections_pb, &QPushButton::clicked, this, &MainWindow::onExportClick);
+
+    // Initialize widgets
+    ui->collections_table->setColumnWidth(0, 20);
+    ui->collections_table->setColumnWidth(1, 140);
+    ui->collections_table->setColumnWidth(2, 60);
+    ui->collections_table->setColumnWidth(3, 60);
 }
 
 MainWindow::~MainWindow(){
     delete ui;
+}
+
+void MainWindow::initializeActors()
+{
+    for (int k = 0;k < 4;k++) {
+        mActor[k] = vtkSmartPointer<vtkActor>::New();
+        mSelActor[k] = vtkSmartPointer<vtkActor>::New();
+    }
+    mSelFunActor = vtkSmartPointer<vtkActor>::New();
+
+    mActor[0]->GetProperty()->SetColor(this->getColors("Volumes"));
+    mActor[1]->GetProperty()->SetColor(this->getColors("Faces"));
+    mActor[2]->GetProperty()->SetColor(this->getColors("Edges"));
+    mActor[2]->GetProperty()->SetRenderLinesAsTubes(1);
+    mActor[2]->GetProperty()->SetLineWidth(2);
+    mActor[3]->GetProperty()->SetColor(this->getColors("Nodes"));
+    mActor[3]->GetProperty()->SetRenderPointsAsSpheres(1);
+    mActor[3]->GetProperty()->SetVertexVisibility(1);
+    mActor[3]->GetProperty()->SetPointSize(400);
+    mActor[3]->GetProperty()->SetColor(this->getColors("Nodes"));
+
+    mSelActor[0]->GetProperty()->SetColor(this->getColors("Volumes selected"));
+    mSelActor[0]->GetProperty()->SetEdgeVisibility(1);
+    mSelActor[1]->GetProperty()->SetColor(this->getColors("Faces selected"));
+    mSelActor[1]->GetProperty()->SetEdgeVisibility(1);
+    mSelActor[2]->GetProperty()->SetColor(this->getColors("Edges selected"));
+    mSelActor[2]->GetProperty()->SetRenderLinesAsTubes(1);
+    mSelActor[2]->GetProperty()->SetLineWidth(3);
+    mSelActor[3]->GetProperty()->SetColor(this->getColors("Nodes selected"));
+    mSelActor[3]->GetProperty()->SetRenderPointsAsSpheres(1);
+    mSelActor[3]->GetProperty()->SetVertexVisibility(1);
+    mSelActor[3]->GetProperty()->SetPointSize(400);
 }
 
 int MainWindow::ui_giveSelectionMode()
@@ -422,83 +483,83 @@ void MainWindow::onTranspNodSliderMoved()
     this->updateView();
 }
 
-void MainWindow::updateSpinValueXm(int val)
+void MainWindow::updateSpinValue(int val)
 {
-    double spinVal = ui->slideSelXm_spin->value();
-    double dx = selBox[1] - selBox[0];
-    int slideVal = static_cast<int>((spinVal - selBox[0]) / dx * 100);
-    if (slideVal != ui->slideSelXm_slider->value()) {
-        ui->slideSelXm_spin->setValue(selBox[0] + dx * val * 0.01);
+    QSlider* obj = static_cast<QSlider*>(sender());
+    int ind;
+    QDoubleSpinBox* spin;
+    if (obj == ui->slideSelXm_slider) {
+        ind = 0;
+        spin = ui->slideSelXm_spin;
+    }
+    else if (obj == ui->slideSelXp_slider) {
+        ind = 0;
+        spin = ui->slideSelXp_spin;
+    }
+    else if (obj == ui->slideSelYm_slider) {
+        ind = 2;
+        spin = ui->slideSelYm_spin;
+    }
+    else if (obj == ui->slideSelYp_slider) {
+        ind = 2;
+        spin = ui->slideSelYp_spin;
+    }
+    else if (obj == ui->slideSelZm_slider) {
+        ind = 4;
+        spin = ui->slideSelZm_spin;
+    }
+    else if (obj == ui->slideSelZp_slider) {
+        ind = 4;
+        spin = ui->slideSelZp_spin;
+    }
+
+    double spinVal = spin->value();
+    double dx = selBox[ind+1] - selBox[ind];
+    int slideVal = static_cast<int>((spinVal - selBox[ind]) / dx * 100);
+    if (slideVal != obj->value()) {
+        spin->setValue(selBox[ind] + dx * val * 0.01);
         this->updateSelectionFunction();
     }
 }
 
-void MainWindow::updateSpinValueXp(int val)
+void MainWindow::updateSlideValue(double val)
 {
-    double spinVal = ui->slideSelXp_spin->value();
-    double dx = selBox[1] - selBox[0];
-    int slideVal = static_cast<int>((spinVal - selBox[0]) / dx * 100);
-    if (slideVal != ui->slideSelXp_slider->value()){
-        ui->slideSelXp_spin->setValue(selBox[0] + dx * val * 0.01);
-        this->updateSelectionFunction();
+    QDoubleSpinBox* obj = static_cast<QDoubleSpinBox*>(sender());
+    int ind;
+    QSlider* slider;
+    if (obj == ui->slideSelXm_spin) {
+        ind = 0;
+        slider = ui->slideSelXm_slider;
     }
-}
-
-void MainWindow::updateSpinValueYm(int val)
-{
-    double spinVal = ui->slideSelYm_spin->value();
-    double dx = selBox[3] - selBox[2];
-    int slideVal = static_cast<int>((spinVal - selBox[2]) / dx * 100);
-    if (slideVal != ui->slideSelYm_slider->value()){
-        ui->slideSelYm_spin->setValue(selBox[2] + dx * val * 0.01);
-        this->updateSelectionFunction();
+    else if (obj == ui->slideSelXp_spin) {
+        ind = 0;
+        slider = ui->slideSelXp_slider;
     }
-}
-
-void MainWindow::updateSpinValueYp(int val)
-{
-    double spinVal = ui->slideSelYp_spin->value();
-    double dx = selBox[3] - selBox[2];
-    int slideVal = static_cast<int>((spinVal - selBox[2]) / dx * 100);
-    if (slideVal != ui->slideSelYp_slider->value()){
-        ui->slideSelYp_spin->setValue(selBox[2] + dx * val * 0.01);
-        this->updateSelectionFunction();
+    else if (obj == ui->slideSelYm_spin) {
+        ind = 2;
+        slider = ui->slideSelYm_slider;
     }
-}
-
-void MainWindow::updateSpinValueZm(int val)
-{
-    double spinVal = ui->slideSelZm_spin->value();
-    double dx = selBox[5] - selBox[4];
-    int slideVal = static_cast<int>((spinVal - selBox[4]) / dx * 100);
-    if (slideVal != ui->slideSelZm_slider->value()){
-        ui->slideSelZm_spin->setValue(selBox[4] + dx * val * 0.01);
-        this->updateSelectionFunction();
+    else if (obj == ui->slideSelYp_spin) {
+        ind = 2;
+        slider = ui->slideSelYp_slider;
     }
-}
-
-void MainWindow::updateSpinValueZp(int val)
-{
-    double spinVal = ui->slideSelZp_spin->value();
-    double dx = selBox[5] - selBox[4];
-    int slideVal = static_cast<int>((spinVal - selBox[4]) / dx*100);
-    if (slideVal != ui->slideSelZp_slider->value()){
-        ui->slideSelZp_spin->setValue(selBox[4] + dx * val * 0.01);
-        this->updateSelectionFunction();
+    else if (obj == ui->slideSelZm_spin) {
+        ind = 4;
+        slider = ui->slideSelZm_slider;
     }
-}
-
-void MainWindow::updateSlideValueXm(double val)
-{
-    int slideVal = ui->slideSelXm_slider->value();
-    double dx = selBox[1] - selBox[0];
-    double spinVal = slideVal + dx * slideVal * 0.01;
-    if (slideVal != ui->slideSelXm_slider->value()){
-        ui->slideSelXm_slider->setSliderPosition(static_cast<int>((spinVal - selBox[0]) / dx));
-        this->updateSelectionFunction();
+    else if (obj == ui->slideSelZp_spin) {
+        ind = 4;
+        slider = ui->slideSelZp_slider;
     }
+//    int currentSliderVal = slider->value();
+    double newSpinVal = val;
+    double dx = selBox[ind+1] - selBox[ind];
+//    double oldSpinVal = selBox[ind] + dx * currentSliderVal * 0.01;
+    int newSliderVal = static_cast<int>((newSpinVal - selBox[ind]) / dx * 100);
+    slider->setSliderPosition(newSliderVal);
+    this->updateSelectionFunction();
 }
-
+/*
 void MainWindow::updateSlideValueXp(double val)
 {
     int slideVal = ui->slideSelXp_slider->value();
@@ -550,7 +611,7 @@ void MainWindow::updateSlideValueZp(double val)
     double spinVal = slideVal + dx * slideVal * 0.01;
     if (slideVal != ui->slideSelZp_slider->value())
         ui->slideSelZp_slider->setValue(static_cast<int>(spinVal - selBox[4]) / dx);
-}
+}*/
 
 void MainWindow::onShowSelectionClick()
 {
@@ -647,14 +708,114 @@ void MainWindow::onUnselectAllClick()
     this->updateView();
 }
 
-void MainWindow::updateView()
+void MainWindow::onExportAddClick()
 {
-    //   char msg[100];
-    //   sprintf_s(msg, "%d", ui->display_combo->currentIndex());
-    //   MessageBoxA(NULL,msg, "Error", MB_ICONEXCLAMATION | MB_OK);
+    QPushButton* obj = static_cast<QPushButton*>(sender());
+    vtkUnstructuredGrid* aMesh = vtkUnstructuredGrid::New();
 
-    //this->updateModelForReselection();
+    int row = ui->collections_table->rowCount();
+    ui->collections_table->insertRow(row);
+    ui->collections_table->setCellWidget(row,0,(new QCheckBox("")));
+    QTableWidgetItem* newItem0;
+    QTableWidgetItem* newItem1;
+    if (obj == ui->expAddVol_pb) {
+        newItem0 = new QTableWidgetItem(tr("Volumes"));
+        newItem1 = new QTableWidgetItem(tr("Volumes"));
+        aMesh->DeepCopy(model->GetSelection(0));
+    }
+    else if (obj == ui->expAddFac_pb) {
+        newItem0 = new QTableWidgetItem(tr("Faces"));
+        newItem1 = new QTableWidgetItem(tr("Faces"));
+        aMesh->DeepCopy(model->GetSelection(1));
+    }
+    else if (obj == ui->expAddEdg_pb) {
+        newItem0 = new QTableWidgetItem(tr("Edges"));
+        newItem1 = new QTableWidgetItem(tr("Edges"));
+        aMesh->DeepCopy(model->GetSelection(2));
+    }
+    else if (obj == ui->expAddNod_pb) {
+        newItem0 = new QTableWidgetItem(tr("Nodes"));
+        newItem1 = new QTableWidgetItem(tr("Nodes"));
+        aMesh->DeepCopy(model->GetSelection(3));
+    }
+    collections.push_back(aMesh);
+    ui->collections_table->setItem(row, 1, newItem0);
+    ui->collections_table->setItem(row, 2, newItem1);
+    QTableWidgetItem* newItem2 = new QTableWidgetItem(std::to_string(aMesh->GetNumberOfCells()).c_str());
+    newItem2->setTextAlignment(Qt::AlignRight);
+    ui->collections_table->setItem(row, 3, newItem2);
 
+}
+
+void MainWindow::onExportClick()
+{
+    vtkSmartPointer<vtkXMLUnstructuredGridWriter> w;
+    for (int row = 0;row < ui->collections_table->rowCount();row++)
+        if ((static_cast<QCheckBox*>(ui->collections_table->cellWidget(row, 0)))->isChecked()) {
+            w = vtkSmartPointer<vtkXMLUnstructuredGridWriter>::New();
+            std::string fname = (ui->collections_table->item(row, 1)->text().toStdString() +std::string(".vtu"));
+            w->SetFileName(fname.c_str());
+            w->SetInputData(collections[row]);
+            w->Write();
+        }
+}
+
+void MainWindow::onParallelProjectionClick()
+{
+    if (ui->viewParallelProjection_cb->isChecked())
+        this->mRenderer->GetActiveCamera()->ParallelProjectionOn();
+    else
+        this->mRenderer->GetActiveCamera()->ParallelProjectionOff();
+    this->updateView();
+}
+
+void MainWindow::onViewDirectionClick()
+{
+    QPushButton* obj = static_cast<QPushButton*>(sender());
+
+    double* center = model->GetModel()->GetCenter();
+    double* bounds = model->GetModel()->GetBounds();
+    double dx = bounds[1] - bounds[0];
+    double dy = bounds[3] - bounds[2];
+    double dz = bounds[5] - bounds[4];
+
+    //cout << this->mRenderer->GetActiveCamera()->GetClippingRange()[0] << "   " << this->mRenderer->GetActiveCamera()->GetClippingRange()[1] << endl;
+    if (obj == ui->viewXm_pb) {
+        this->mRenderer->GetActiveCamera()->SetPosition(center[0] - 5 * dx, center[1], center[2]);
+        this->mRenderer->GetActiveCamera()->SetFocalPoint(bounds[0], center[1], center[2]);
+        this->mRenderer->GetActiveCamera()->SetViewUp(0, 1, 0);
+    }
+    else if (obj == ui->viewXp_pb) {
+        this->mRenderer->GetActiveCamera()->SetPosition(center[0] + 5 * dx, center[1], center[2]);
+        this->mRenderer->GetActiveCamera()->SetFocalPoint(bounds[1], center[1], center[2]);
+        this->mRenderer->GetActiveCamera()->SetViewUp(0, 1, 0);
+    }
+    else if (obj == ui->viewYm_pb) {
+        this->mRenderer->GetActiveCamera()->SetPosition(center[0], center[1] - 5 * dy, center[2]);
+        this->mRenderer->GetActiveCamera()->SetFocalPoint(center[0], bounds[2], center[2]);
+        this->mRenderer->GetActiveCamera()->SetViewUp(0, 0, 1);
+    }
+    else if (obj == ui->viewYp_pb) {
+        this->mRenderer->GetActiveCamera()->SetPosition(center[0], center[1] + 5 * dy, center[2]);
+        this->mRenderer->GetActiveCamera()->SetFocalPoint(center[0], bounds[3], center[2]);
+        this->mRenderer->GetActiveCamera()->SetViewUp(0, 0, 1);
+    }
+    else if (obj == ui->viewZm_pb) {
+        this->mRenderer->GetActiveCamera()->SetPosition(center[0], center[1], center[2] - 5 * dz);
+        this->mRenderer->GetActiveCamera()->SetFocalPoint(center[0], center[1], bounds[4]);
+        this->mRenderer->GetActiveCamera()->SetViewUp(0, 1, 0);
+    }
+    else if (obj == ui->viewZp_pb) {
+        this->mRenderer->GetActiveCamera()->SetPosition(center[0], center[1], center[2] + 5 * dz);
+        this->mRenderer->GetActiveCamera()->SetFocalPoint(center[0], center[1], bounds[5]);
+        this->mRenderer->GetActiveCamera()->SetViewUp(0, 1, 0);
+    }
+    this->mRenderer->ResetCamera();
+    this->updateView();
+}
+
+void MainWindow::onDisplayVolClick()
+{
     // Update visibility settings for volumes
     int disp_ind = ui->displayVol_combo->currentIndex();
     if (disp_ind == 0) {
@@ -672,17 +833,20 @@ void MainWindow::updateView()
 
     if (ui->displayVol_cb->isChecked()) {
         mActor[0]->SetVisibility(1);
-        mActor[0]->GetProperty()->SetColor(this->getColors("Volumes"));
     }
     else
         mActor[0]->SetVisibility(0);
     if (ui->displayVolSel_cb->isChecked()) {
         mSelActor[0]->SetVisibility(1);
-        mSelActor[0]->GetProperty()->SetColor(this->getColors("Volumes selected"));
     }
     else
         mSelActor[0]->SetVisibility(0);
 
+    this->updateView();
+}
+
+void MainWindow::onDisplayFacClick()
+{
     // Update visibility settings for faces
     int fac_ind = ui->displayFac_combo->currentIndex();
     if (fac_ind == 0) {
@@ -694,88 +858,71 @@ void MainWindow::updateView()
         mActor[1]->GetProperty()->SetEdgeVisibility(1);
     }
     else if (fac_ind == 2) {
-        mActor[1]->GetProperty()->SetRepresentationToSurface();
-        mActor[1]->GetProperty()->SetEdgeVisibility(0);
-        vtkSmartPointer<vtkDataSet> mm = mActor[1]->GetMapper()->GetInput();
+        mActor[1]->GetProperty()->SetRepresentationToWireframe();
+        mActor[1]->GetProperty()->SetEdgeVisibility(1);
     }
 
     if (ui->displayFac_cb->isChecked()) {
         mActor[1]->SetVisibility(1);
-        mActor[1]->GetProperty()->SetColor(this->getColors("Faces"));
     }
     else
         mActor[1]->SetVisibility(0);
     if (ui->displayFacSel_cb->isChecked()) {
         mSelActor[1]->SetVisibility(1);
-        mSelActor[1]->GetProperty()->SetColor(this->getColors("Faces selected"));
     }
     else
         mSelActor[1]->SetVisibility(0);
 
+    this->updateView();
+}
+
+void MainWindow::onDisplayEdgClick()
+{
     if (ui->displayEdg_cb->isChecked()) {
         mActor[2]->SetVisibility(1);
-        mActor[2]->GetProperty()->SetRenderLinesAsTubes(1);
-        mActor[2]->GetProperty()->SetLineWidth(2);
-        mActor[2]->GetProperty()->SetColor(this->getColors("Edges"));
     }
     else
         mActor[2]->SetVisibility(0);
     if (ui->displayEdgSel_cb->isChecked()) {
         mSelActor[2]->SetVisibility(1);
-        mSelActor[2]->GetProperty()->SetRenderLinesAsTubes(1);
-        mSelActor[2]->GetProperty()->SetLineWidth(2);
-        mSelActor[2]->GetProperty()->SetColor(this->getColors("Edges selected"));
     }
     else
         mSelActor[2]->SetVisibility(0);
 
+    this->updateView();
+}
+
+void MainWindow::onDisplayNodClick()
+{
     if (ui->displayNod_cb->isChecked()) {
         mActor[3]->SetVisibility(1);
-        mActor[3]->GetProperty()->SetRenderLinesAsTubes(1);
-        mActor[3]->GetProperty()->SetRenderPointsAsSpheres(1);
-        mActor[3]->GetProperty()->SetVertexVisibility(1);
-        mActor[3]->GetProperty()->SetPointSize(400);
-        mActor[3]->GetProperty()->SetColor(this->getColors("Nodes"));
     }
     else
         mActor[3]->SetVisibility(0);
     if (ui->displayNodSel_cb->isChecked()) {
         mSelActor[3]->SetVisibility(1);
-        mSelActor[3]->GetProperty()->SetRenderLinesAsTubes(1);
-        mSelActor[3]->GetProperty()->SetRenderPointsAsSpheres(1);
-        mSelActor[3]->GetProperty()->SetVertexVisibility(1);
-        mSelActor[3]->GetProperty()->SetPointSize(400);
-        mSelActor[3]->GetProperty()->SetColor(this->getColors("Nodes selected"));
     }
     else
         mSelActor[3]->SetVisibility(0);
 
-    this->updateSelection();
-
-    mRenderWindow->Render();
-
-    //char msg[100];
-    //sprintf_s(msg, "%d", model->GetVisibleFaceModel());
-    //MessageBoxA(NULL,msg, "Error", MB_ICONEXCLAMATION | MB_OK);
+    this->updateView();
 }
 
-void MainWindow::updateSelection()
+
+void MainWindow::updateView()
+{
+    this->updateSelectionActors();
+    mRenderWindow->Render();
+}
+
+void MainWindow::updateSelectionActors()
 {
     for (int k = 0;k < 4;k++) {
         vtkSmartPointer<vtkDataSetMapper> selMapper = vtkSmartPointer<vtkDataSetMapper>::New();
         selMapper->SetInputData(model->GetSelection(k));
 
         mSelActor[k]->SetMapper(selMapper);
-        //mSelActor[k]->SetVisibility(1);
     }
-    mSelActor[0]->GetProperty()->SetColor(this->getColors("Volumes selected"));
-    mSelActor[0]->GetProperty()->SetEdgeVisibility(1);
-    mSelActor[1]->GetProperty()->SetColor(this->getColors("Faces selected"));
-    mSelActor[1]->GetProperty()->SetEdgeVisibility(1);
-    mSelActor[2]->GetProperty()->SetColor(this->getColors("Edges selected"));
-    mSelActor[2]->GetProperty()->SetRenderLinesAsTubes(1);
-    mSelActor[2]->GetProperty()->SetLineWidth(3);
-    mSelActor[3]->GetProperty()->SetColor(this->getColors("Nodes selected"));
 }
 
 vtkSmartPointer<vtkActor> MainWindow::giveActor(int obj_type)

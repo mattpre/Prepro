@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    const uint offsetsAndSize[62];
-    char stringdata0[568];
+    const uint offsetsAndSize[56];
+    char stringdata0[513];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_MainWindow_t, stringdata0) + ofs), len 
@@ -33,50 +33,46 @@ QT_MOC_LITERAL(0, 10), // "MainWindow"
 QT_MOC_LITERAL(11, 15), // "onLoadMeshClick"
 QT_MOC_LITERAL(27, 0), // ""
 QT_MOC_LITERAL(28, 10), // "updateView"
-QT_MOC_LITERAL(39, 15), // "updateSelection"
-QT_MOC_LITERAL(55, 20), // "onSelectionModeClick"
-QT_MOC_LITERAL(76, 16), // "onMouseModeClick"
-QT_MOC_LITERAL(93, 22), // "onSelectionMethodClick"
-QT_MOC_LITERAL(116, 22), // "onTranspVolSliderMoved"
-QT_MOC_LITERAL(139, 22), // "onTranspFacSliderMoved"
-QT_MOC_LITERAL(162, 22), // "onTranspEdgSliderMoved"
-QT_MOC_LITERAL(185, 22), // "onTranspNodSliderMoved"
-QT_MOC_LITERAL(208, 20), // "onShowSelectionClick"
-QT_MOC_LITERAL(229, 20), // "onHideSelectionClick"
-QT_MOC_LITERAL(250, 14), // "onShowAllClick"
-QT_MOC_LITERAL(265, 21), // "onSelectEntitiesClick"
-QT_MOC_LITERAL(287, 16), // "onSelectAllClick"
-QT_MOC_LITERAL(304, 22), // "onSelectionInvertClick"
-QT_MOC_LITERAL(327, 18), // "onUnselectAllClick"
-QT_MOC_LITERAL(346, 17), // "updateSpinValueXm"
-QT_MOC_LITERAL(364, 17), // "updateSpinValueXp"
-QT_MOC_LITERAL(382, 17), // "updateSpinValueYm"
-QT_MOC_LITERAL(400, 17), // "updateSpinValueYp"
-QT_MOC_LITERAL(418, 17), // "updateSpinValueZm"
-QT_MOC_LITERAL(436, 17), // "updateSpinValueZp"
-QT_MOC_LITERAL(454, 18), // "updateSlideValueXm"
-QT_MOC_LITERAL(473, 18), // "updateSlideValueXp"
-QT_MOC_LITERAL(492, 18), // "updateSlideValueYm"
-QT_MOC_LITERAL(511, 18), // "updateSlideValueYp"
-QT_MOC_LITERAL(530, 18), // "updateSlideValueZm"
-QT_MOC_LITERAL(549, 18) // "updateSlideValueZp"
+QT_MOC_LITERAL(39, 20), // "onSelectionModeClick"
+QT_MOC_LITERAL(60, 16), // "onMouseModeClick"
+QT_MOC_LITERAL(77, 22), // "onSelectionMethodClick"
+QT_MOC_LITERAL(100, 22), // "onTranspVolSliderMoved"
+QT_MOC_LITERAL(123, 22), // "onTranspFacSliderMoved"
+QT_MOC_LITERAL(146, 22), // "onTranspEdgSliderMoved"
+QT_MOC_LITERAL(169, 22), // "onTranspNodSliderMoved"
+QT_MOC_LITERAL(192, 20), // "onShowSelectionClick"
+QT_MOC_LITERAL(213, 20), // "onHideSelectionClick"
+QT_MOC_LITERAL(234, 14), // "onShowAllClick"
+QT_MOC_LITERAL(249, 21), // "onSelectEntitiesClick"
+QT_MOC_LITERAL(271, 16), // "onSelectAllClick"
+QT_MOC_LITERAL(288, 22), // "onSelectionInvertClick"
+QT_MOC_LITERAL(311, 18), // "onUnselectAllClick"
+QT_MOC_LITERAL(330, 16), // "onExportAddClick"
+QT_MOC_LITERAL(347, 13), // "onExportClick"
+QT_MOC_LITERAL(361, 25), // "onParallelProjectionClick"
+QT_MOC_LITERAL(387, 20), // "onViewDirectionClick"
+QT_MOC_LITERAL(408, 17), // "onDisplayVolClick"
+QT_MOC_LITERAL(426, 17), // "onDisplayFacClick"
+QT_MOC_LITERAL(444, 17), // "onDisplayEdgClick"
+QT_MOC_LITERAL(462, 17), // "onDisplayNodClick"
+QT_MOC_LITERAL(480, 15), // "updateSpinValue"
+QT_MOC_LITERAL(496, 16) // "updateSlideValue"
 
     },
     "MainWindow\0onLoadMeshClick\0\0updateView\0"
-    "updateSelection\0onSelectionModeClick\0"
-    "onMouseModeClick\0onSelectionMethodClick\0"
-    "onTranspVolSliderMoved\0onTranspFacSliderMoved\0"
-    "onTranspEdgSliderMoved\0onTranspNodSliderMoved\0"
-    "onShowSelectionClick\0onHideSelectionClick\0"
-    "onShowAllClick\0onSelectEntitiesClick\0"
-    "onSelectAllClick\0onSelectionInvertClick\0"
-    "onUnselectAllClick\0updateSpinValueXm\0"
-    "updateSpinValueXp\0updateSpinValueYm\0"
-    "updateSpinValueYp\0updateSpinValueZm\0"
-    "updateSpinValueZp\0updateSlideValueXm\0"
-    "updateSlideValueXp\0updateSlideValueYm\0"
-    "updateSlideValueYp\0updateSlideValueZm\0"
-    "updateSlideValueZp"
+    "onSelectionModeClick\0onMouseModeClick\0"
+    "onSelectionMethodClick\0onTranspVolSliderMoved\0"
+    "onTranspFacSliderMoved\0onTranspEdgSliderMoved\0"
+    "onTranspNodSliderMoved\0onShowSelectionClick\0"
+    "onHideSelectionClick\0onShowAllClick\0"
+    "onSelectEntitiesClick\0onSelectAllClick\0"
+    "onSelectionInvertClick\0onUnselectAllClick\0"
+    "onExportAddClick\0onExportClick\0"
+    "onParallelProjectionClick\0"
+    "onViewDirectionClick\0onDisplayVolClick\0"
+    "onDisplayFacClick\0onDisplayEdgClick\0"
+    "onDisplayNodClick\0updateSpinValue\0"
+    "updateSlideValue"
 };
 #undef QT_MOC_LITERAL
 
@@ -86,7 +82,7 @@ static const uint qt_meta_data_MainWindow[] = {
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-      29,   14, // methods
+      26,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -94,35 +90,32 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,  188,    2, 0x0a,    1 /* Public */,
-       3,    0,  189,    2, 0x0a,    2 /* Public */,
-       4,    0,  190,    2, 0x0a,    3 /* Public */,
-       5,    0,  191,    2, 0x0a,    4 /* Public */,
-       6,    0,  192,    2, 0x0a,    5 /* Public */,
-       7,    0,  193,    2, 0x0a,    6 /* Public */,
-       8,    0,  194,    2, 0x0a,    7 /* Public */,
-       9,    0,  195,    2, 0x0a,    8 /* Public */,
-      10,    0,  196,    2, 0x0a,    9 /* Public */,
-      11,    0,  197,    2, 0x0a,   10 /* Public */,
-      12,    0,  198,    2, 0x0a,   11 /* Public */,
-      13,    0,  199,    2, 0x0a,   12 /* Public */,
-      14,    0,  200,    2, 0x0a,   13 /* Public */,
-      15,    0,  201,    2, 0x0a,   14 /* Public */,
-      16,    0,  202,    2, 0x0a,   15 /* Public */,
-      17,    0,  203,    2, 0x0a,   16 /* Public */,
-      18,    0,  204,    2, 0x0a,   17 /* Public */,
-      19,    1,  205,    2, 0x0a,   18 /* Public */,
-      20,    1,  208,    2, 0x0a,   20 /* Public */,
-      21,    1,  211,    2, 0x0a,   22 /* Public */,
-      22,    1,  214,    2, 0x0a,   24 /* Public */,
-      23,    1,  217,    2, 0x0a,   26 /* Public */,
-      24,    1,  220,    2, 0x0a,   28 /* Public */,
-      25,    1,  223,    2, 0x0a,   30 /* Public */,
-      26,    1,  226,    2, 0x0a,   32 /* Public */,
-      27,    1,  229,    2, 0x0a,   34 /* Public */,
-      28,    1,  232,    2, 0x0a,   36 /* Public */,
-      29,    1,  235,    2, 0x0a,   38 /* Public */,
-      30,    1,  238,    2, 0x0a,   40 /* Public */,
+       1,    0,  170,    2, 0x0a,    1 /* Public */,
+       3,    0,  171,    2, 0x0a,    2 /* Public */,
+       4,    0,  172,    2, 0x0a,    3 /* Public */,
+       5,    0,  173,    2, 0x0a,    4 /* Public */,
+       6,    0,  174,    2, 0x0a,    5 /* Public */,
+       7,    0,  175,    2, 0x0a,    6 /* Public */,
+       8,    0,  176,    2, 0x0a,    7 /* Public */,
+       9,    0,  177,    2, 0x0a,    8 /* Public */,
+      10,    0,  178,    2, 0x0a,    9 /* Public */,
+      11,    0,  179,    2, 0x0a,   10 /* Public */,
+      12,    0,  180,    2, 0x0a,   11 /* Public */,
+      13,    0,  181,    2, 0x0a,   12 /* Public */,
+      14,    0,  182,    2, 0x0a,   13 /* Public */,
+      15,    0,  183,    2, 0x0a,   14 /* Public */,
+      16,    0,  184,    2, 0x0a,   15 /* Public */,
+      17,    0,  185,    2, 0x0a,   16 /* Public */,
+      18,    0,  186,    2, 0x0a,   17 /* Public */,
+      19,    0,  187,    2, 0x0a,   18 /* Public */,
+      20,    0,  188,    2, 0x0a,   19 /* Public */,
+      21,    0,  189,    2, 0x0a,   20 /* Public */,
+      22,    0,  190,    2, 0x0a,   21 /* Public */,
+      23,    0,  191,    2, 0x0a,   22 /* Public */,
+      24,    0,  192,    2, 0x0a,   23 /* Public */,
+      25,    0,  193,    2, 0x0a,   24 /* Public */,
+      26,    1,  194,    2, 0x0a,   25 /* Public */,
+      27,    1,  197,    2, 0x0a,   27 /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -142,17 +135,14 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void, QMetaType::Int,    2,
-    QMetaType::Void, QMetaType::Int,    2,
-    QMetaType::Void, QMetaType::Int,    2,
-    QMetaType::Void, QMetaType::Int,    2,
-    QMetaType::Void, QMetaType::Int,    2,
-    QMetaType::Void, QMetaType::Int,    2,
-    QMetaType::Void, QMetaType::Double,    2,
-    QMetaType::Void, QMetaType::Double,    2,
-    QMetaType::Void, QMetaType::Double,    2,
-    QMetaType::Void, QMetaType::Double,    2,
-    QMetaType::Void, QMetaType::Double,    2,
     QMetaType::Void, QMetaType::Double,    2,
 
        0        // eod
@@ -166,33 +156,30 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         switch (_id) {
         case 0: _t->onLoadMeshClick(); break;
         case 1: _t->updateView(); break;
-        case 2: _t->updateSelection(); break;
-        case 3: _t->onSelectionModeClick(); break;
-        case 4: _t->onMouseModeClick(); break;
-        case 5: _t->onSelectionMethodClick(); break;
-        case 6: _t->onTranspVolSliderMoved(); break;
-        case 7: _t->onTranspFacSliderMoved(); break;
-        case 8: _t->onTranspEdgSliderMoved(); break;
-        case 9: _t->onTranspNodSliderMoved(); break;
-        case 10: _t->onShowSelectionClick(); break;
-        case 11: _t->onHideSelectionClick(); break;
-        case 12: _t->onShowAllClick(); break;
-        case 13: _t->onSelectEntitiesClick(); break;
-        case 14: _t->onSelectAllClick(); break;
-        case 15: _t->onSelectionInvertClick(); break;
-        case 16: _t->onUnselectAllClick(); break;
-        case 17: _t->updateSpinValueXm((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 18: _t->updateSpinValueXp((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 19: _t->updateSpinValueYm((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 20: _t->updateSpinValueYp((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 21: _t->updateSpinValueZm((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 22: _t->updateSpinValueZp((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 23: _t->updateSlideValueXm((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 24: _t->updateSlideValueXp((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 25: _t->updateSlideValueYm((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 26: _t->updateSlideValueYp((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 27: _t->updateSlideValueZm((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 28: _t->updateSlideValueZp((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 2: _t->onSelectionModeClick(); break;
+        case 3: _t->onMouseModeClick(); break;
+        case 4: _t->onSelectionMethodClick(); break;
+        case 5: _t->onTranspVolSliderMoved(); break;
+        case 6: _t->onTranspFacSliderMoved(); break;
+        case 7: _t->onTranspEdgSliderMoved(); break;
+        case 8: _t->onTranspNodSliderMoved(); break;
+        case 9: _t->onShowSelectionClick(); break;
+        case 10: _t->onHideSelectionClick(); break;
+        case 11: _t->onShowAllClick(); break;
+        case 12: _t->onSelectEntitiesClick(); break;
+        case 13: _t->onSelectAllClick(); break;
+        case 14: _t->onSelectionInvertClick(); break;
+        case 15: _t->onUnselectAllClick(); break;
+        case 16: _t->onExportAddClick(); break;
+        case 17: _t->onExportClick(); break;
+        case 18: _t->onParallelProjectionClick(); break;
+        case 19: _t->onViewDirectionClick(); break;
+        case 20: _t->onDisplayVolClick(); break;
+        case 21: _t->onDisplayFacClick(); break;
+        case 22: _t->onDisplayEdgClick(); break;
+        case 23: _t->onDisplayNodClick(); break;
+        case 24: _t->updateSpinValue((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 25: _t->updateSlideValue((*reinterpret_cast< double(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -206,7 +193,7 @@ const QMetaObject MainWindow::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_MainWindow_t
 , QtPrivate::TypeAndForceComplete<MainWindow, std::true_type>
-, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>
 
 
 >,
@@ -233,13 +220,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 29)
+        if (_id < 26)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 29;
+        _id -= 26;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 29)
+        if (_id < 26)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 29;
+        _id -= 26;
     }
     return _id;
 }

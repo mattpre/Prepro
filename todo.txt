@@ -3,3 +3,4 @@ the face of an element are selected. 1) All polygons of a face should be
 shown or removed together and 2) Is face selected when only some polys are
 selected?
 edges: perhaps add a new entity "Face edges", in addition to volume edges
+node business...
